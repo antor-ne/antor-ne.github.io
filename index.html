@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Abdur Rahman Antor — Nuclear Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #f3f5f6;
+    --bg-panel: #eaeff1;
+    --ink: #141a1d;
+    --muted: #5b6b72;
+    --line: #d7dee1;
+    --accent: #1c6fa5;
+    --accent-bright: #3fa8dd;
+    --tag-bg: #e5f0f6;
+    --tag-ink: #1c6fa5;
+    --white: #ffffff;
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{ background:var(--accent-bright); color:#fff; }
+
+  a{color:var(--accent); text-decoration:none;}
+  a:hover{color:var(--accent-bright);}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--accent); outline-offset:3px;}
+
+  .wrap{ max-width:920px; margin:0 auto; padding:0 32px; }
+
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+
+  h1,h2,h3{ font-family:'Fraunces', serif; font-weight:600; letter-spacing:-0.01em; }
+
+  /* ---------- Nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(243,245,246,0.88);
+    backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:920px; margin:0 auto; padding:16px 32px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .nav-mark{
+    font-family:'IBM Plex Mono', monospace; font-size:14px; font-weight:500;
+    display:flex; align-items:center; gap:8px;
+  }
+  .nav-mark .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px var(--tag-bg);
+  }
+  nav.links{ display:flex; gap:26px; }
+  nav.links a{
+    font-size:13.5px; color:var(--ink); font-weight:500;
+  }
+  nav.links a:hover{ color:var(--accent); }
+  .nav-toggle{ display:none; }
+
+  @media (max-width:680px){
+    nav.links{ display:none; }
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    position:relative;
+    padding:96px 0 84px;
+    overflow:hidden;
+    border-bottom:1px solid var(--line);
+  }
+  .hero-inner{ position:relative; z-index:2; }
+  .hero .eyebrow{ margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(40px, 6vw, 68px);
+    line-height:1.04;
+    max-width:11ch;
+  }
+  .hero .role{
+    font-family:'Fraunces', serif;
+    font-style:italic;
+    font-weight:400;
+    color:var(--accent);
+  }
+  .hero p.lede{
+    max-width:56ch;
+    margin-top:26px;
+    font-size:17.5px;
+    color:var(--muted);
+  }
+  .hero .cta-row{
+    margin-top:36px;
+    display:flex; flex-wrap:wrap; gap:14px;
+  }
+  .btn{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    padding:11px 18px;
+    border-radius:3px;
+    border:1px solid var(--ink);
+    color:var(--ink);
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    transition:all .18s ease;
+  }
+  .btn:hover{ background:var(--ink); color:var(--bg); }
+  .btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
+  .btn.primary:hover{ background:var(--accent-bright); border-color:var(--accent-bright); color:#fff; }
+
+  /* neutron-track svg */
+  .hero-svg{
+    position:absolute; top:0; right:-60px; z-index:1;
+    width:520px; height:520px; opacity:0.9;
+    pointer-events:none;
+  }
+  @media (max-width:900px){ .hero-svg{ display:none; } }
+
+  /* ---------- Sections ---------- */
+  section{ padding:76px 0; border-bottom:1px solid var(--line); }
+  section:last-of-type{ border-bottom:none; }
+
+  .section-head{
+    display:flex; align-items:baseline; gap:16px;
+    margin-bottom:40px;
+  }
+  .section-head h2{ font-size:28px; }
+  .section-head .eyebrow{ white-space:nowrap; }
+  .section-head::after{
+    content:''; flex:1; height:1px; background:var(--line);
+  }
+
+  /* research interests */
+  .interest-grid{
+    display:grid; grid-template-columns:repeat(2, 1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line);
+  }
+  .interest-card{
+    background:var(--bg); padding:26px 28px;
+  }
+  .interest-card .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+    color:var(--accent); letter-spacing:.06em;
+  }
+  .interest-card p{ margin-top:10px; font-size:15px; }
+  @media (max-width:640px){ .interest-grid{ grid-template-columns:1fr; } }
+
+  /* timeline (experience / education) */
+  .entry{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:24px;
+    padding:26px 0;
+    border-top:1px solid var(--line);
+  }
+  .entry:first-child{ border-top:none; }
+  .entry .when{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px; color:var(--muted);
+    padding-top:3px;
+  }
+  .entry h3{ font-size:19px; font-weight:600; }
+  .entry .org{ color:var(--accent); font-size:14.5px; font-weight:500; margin-top:2px; }
+  .entry .place{ color:var(--muted); font-size:13.5px; margin-top:1px; }
+  .entry ul{ margin-top:12px; padding-left:18px; color:var(--ink); font-size:15px; }
+  .entry ul li{ margin-bottom:6px; }
+  .entry ul li::marker{ color:var(--accent); }
+  @media (max-width:600px){
+    .entry{ grid-template-columns:1fr; gap:6px; }
+  }
+
+  /* projects */
+  .project-card{
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:28px;
+    background:var(--white);
+  }
+  .project-card h3{ font-size:20px; }
+  .project-card .when{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); margin-top:4px; }
+  .project-card p{ margin-top:14px; font-size:15px; color:var(--ink); }
+  .tool-row{ margin-top:16px; display:flex; flex-wrap:wrap; gap:8px; }
+  .tool-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:11.5px;
+    background:var(--tag-bg); color:var(--tag-ink);
+    padding:5px 10px; border-radius:3px;
+  }
+
+  /* publications */
+  .pub{
+    display:grid; grid-template-columns:56px 1fr; gap:20px;
+    padding:22px 0; border-top:1px solid var(--line);
+  }
+  .pub:first-child{ border-top:none; }
+  .pub .idx{
+    font-family:'IBM Plex Mono', monospace; font-size:13px;
+    color:var(--accent); padding-top:2px;
+  }
+  .pub p{ font-size:15px; }
+  .pub .cite-title{ font-weight:600; }
+  .pub .venue{ color:var(--muted); font-size:13.5px; margin-top:6px; }
+  .pub a.doi{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; }
+
+  /* skills */
+  .skill-groups{ display:grid; grid-template-columns:repeat(2,1fr); gap:32px 40px; }
+  .skill-group h3{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin-bottom:14px;
+  }
+  .skill-group .tool-row{ margin-top:0; }
+  @media (max-width:640px){ .skill-groups{ grid-template-columns:1fr; } }
+
+  /* honors / leadership / volunteer / certs as compact lists */
+  .list-block{ margin-bottom:34px; }
+  .list-block:last-child{ margin-bottom:0; }
+  .list-block h3{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin-bottom:14px;
+  }
+  .row-item{
+    display:flex; justify-content:space-between; gap:16px;
+    padding:12px 0; border-top:1px solid var(--line);
+    font-size:15px;
+  }
+  .row-item:first-of-type{ border-top:none; }
+  .row-item .who{ font-weight:500; }
+  .row-item .sub{ color:var(--muted); font-size:13.5px; margin-top:2px; }
+  .row-item .when{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; color:var(--muted); white-space:nowrap; }
+
+  /* languages / interests */
+  .meta-row{ display:flex; flex-wrap:wrap; gap:40px; }
+  .meta-col h3{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; font-weight:500;
+    text-transform:uppercase; letter-spacing:.08em; color:var(--muted);
+    margin-bottom:12px;
+  }
+  .meta-col p{ font-size:15px; }
+
+  /* footer / contact */
+  footer{
+    padding:80px 0 60px;
+    background:var(--bg-panel);
+  }
+  footer h2{ font-size:32px; max-width:14ch; }
+  footer .lede{ color:var(--muted); margin-top:14px; max-width:48ch; }
+  footer .cta-row{ margin-top:32px; display:flex; flex-wrap:wrap; gap:14px; }
+  footer .fine{
+    margin-top:56px; padding-top:24px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+    font-family:'IBM Plex Mono', monospace; font-size:12px; color:var(--muted);
+  }
+
+  /* reveal on scroll */
+  .reveal{ opacity:0; transform:translateY(14px); transition:opacity .6s ease, transform .6s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .reveal{ opacity:1; transform:none; transition:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-mark"><span class="dot"></span> A. R. ANTOR</div>
+    <nav class="links">
+      <a href="#work">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#publications">Publications</a>
+      <a href="#skills">Skills</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <svg class="hero-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <circle cx="260" cy="260" r="3" fill="#1c6fa5"/>
+    <path d="M260 260 C 340 180, 420 210, 470 140" stroke="#1c6fa5" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.55"/>
+    <path d="M260 260 C 180 200, 140 120, 90 70" stroke="#1c6fa5" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.4"/>
+    <path d="M260 260 C 210 340, 240 410, 190 480" stroke="#1c6fa5" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.45"/>
+    <path d="M260 260 C 350 300, 400 360, 470 400" stroke="#1c6fa5" stroke-width="1.2" stroke-dasharray="3 6" opacity="0.35"/>
+    <circle cx="470" cy="140" r="4" fill="#3fa8dd" opacity="0.8"/>
+    <circle cx="90" cy="70" r="3" fill="#3fa8dd" opacity="0.6"/>
+    <circle cx="190" cy="480" r="3.5" fill="#3fa8dd" opacity="0.65"/>
+    <circle cx="470" cy="400" r="3" fill="#3fa8dd" opacity="0.5"/>
+    <circle cx="260" cy="260" r="90" stroke="#1c6fa5" stroke-width="1" opacity="0.12"/>
+    <circle cx="260" cy="260" r="150" stroke="#1c6fa5" stroke-width="1" opacity="0.08"/>
+  </svg>
+  <div class="wrap hero-inner">
+    <div class="eyebrow">Dept. of Nuclear Engineering · University of Dhaka</div>
+    <h1>Abdur Rahman<br>Antor</h1>
+    <div class="role" style="font-size:20px; margin-top:14px;">Reactor physics, neutronics &amp; computational modeling</div>
+    <p class="lede">M.Sc. researcher building open-source neutronics tools for research reactor design — currently modeling the BAEC TRIGA Research Reactor with OpenMC, and exploring physics-informed machine learning for reactor physics and thermal hydraulics.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="mailto:antor9p@gmail.com">Email me</a>
+      <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="interests">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Research Interests</h2>
+      <span class="eyebrow">01</span>
+    </div>
+    <div class="interest-grid">
+      <div class="interest-card">
+        <div class="tag">SIMULATION</div>
+        <p>Computational nuclear engineering tools — GEANT4 and OpenMC for particle transport and reactor modeling.</p>
+      </div>
+      <div class="interest-card">
+        <div class="tag">SOFTWARE</div>
+        <p>Code development in Python, built around real reactor data and research workflows.</p>
+      </div>
+      <div class="interest-card">
+        <div class="tag">MACHINE LEARNING</div>
+        <p>Regression models and physics-informed neural networks applied to reactor behavior.</p>
+      </div>
+      <div class="interest-card">
+        <div class="tag">CORE FOCUS</div>
+        <p>Reactor physics and thermal hydraulics — the questions those tools are built to answer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Experience</h2>
+      <span class="eyebrow">02</span>
+    </div>
+
+    <div class="entry">
+      <div class="when">Apr 2024 — Present</div>
+      <div>
+        <h3>Research Assistant</h3>
+        <div class="org">Advanced Reactor Design and Analysis Group (ARDAG)</div>
+        <div class="place">Curzon Hall, University of Dhaka · formerly "Fused Nucleus"</div>
+        <ul>
+          <li>Developed OpenMC models for the BAEC TRIGA Research Reactor (BTRR).</li>
+          <li>Contributing to multiple ongoing research projects in reactor physics.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">Jan 2024</div>
+      <div>
+        <h3>Industrial Trainee</h3>
+        <div class="org">Bangladesh Atomic Energy Commission (BAEC)</div>
+        <div class="place">Savar, Dhaka, Bangladesh</div>
+        <ul>
+          <li>Attached to the Reactor Physics and Engineering Division, INST.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Education</h2>
+      <span class="eyebrow">03</span>
+    </div>
+
+    <div class="entry">
+      <div class="when">2025 — Present</div>
+      <div>
+        <h3>M.Sc. in Nuclear Engineering</h3>
+        <div class="org">University of Dhaka</div>
+        <div class="place">Dhaka, Bangladesh · CGPA 3.94/4.00 (first semester)</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">2020 — 2025</div>
+      <div>
+        <h3>B.Sc. in Nuclear Engineering</h3>
+        <div class="org">University of Dhaka</div>
+        <div class="place">Dhaka, Bangladesh · CGPA 3.71/4.00</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">2019</div>
+      <div>
+        <h3>Higher Secondary Education</h3>
+        <div class="org">Dhaka City College</div>
+        <div class="place">Dhaka, Bangladesh · GPA 5.00/5.00</div>
+      </div>
+    </div>
+
+    <div class="entry">
+      <div class="when">2017</div>
+      <div>
+        <h3>Secondary Education</h3>
+        <div class="org">Badalkote High School</div>
+        <div class="place">Noakhali, Chittagong, Bangladesh · GPA 5.00/5.00</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Projects</h2>
+      <span class="eyebrow">04</span>
+    </div>
+    <div class="project-card">
+      <h3>Automated Control Strategies of a Dummy Reactor</h3>
+      <div class="when">December 2023</div>
+      <p>Built around the integral control rod worth curve collected from sample data of the BAEC TRIGA Mark-II Research Reactor. Demonstrates control rod movement during start-up and adjustment for smooth, stable operation.</p>
+      <div class="tool-row">
+        <span class="tool-tag">Arduino</span>
+        <span class="tool-tag">MATLAB</span>
+        <span class="tool-tag">Servo Motor</span>
+        <span class="tool-tag">Stepper Motor</span>
+        <span class="tool-tag">Ultrasonic Sensor</span>
+        <span class="tool-tag">Buzzer</span>
+        <span class="tool-tag">LED</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="publications">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Publications</h2>
+      <span class="eyebrow">05</span>
+    </div>
+
+    <div class="pub">
+      <div class="idx">[J.1]</div>
+      <div>
+        <p class="cite-title">Neutronics analysis of (Th-233U)-ErZrH1.6 fuel: Optimizing Erbium content and U-233 enrichment for TRIGA Mark-II via OpenMC</p>
+        <p class="venue">A. R. Antor, M. T. Ahmed, M. R. Hadi, et al. · Annals of Nuclear Energy, Vol. 226, p. 111803 (2025)</p>
+        <a class="doi" href="https://doi.org/10.1016/j.anucene.2025.111803" target="_blank" rel="noopener">doi.org/10.1016/j.anucene.2025.111803 ↗</a>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="idx">[J.2]</div>
+      <div>
+        <p class="cite-title">Comparative analysis of tritium breeding ratio of a tokamak reactor using different blanket materials</p>
+        <p class="venue">M. R. Hadi, M. T. Ahmed, M. Rahman, A. R. Antor, et al. · Annals of Nuclear Energy, Vol. 236, p. 112386 (2026)</p>
+        <a class="doi" href="https://doi.org/10.1016/j.anucene.2026.112386" target="_blank" rel="noopener">doi.org/10.1016/j.anucene.2026.112386 ↗</a>
+      </div>
+    </div>
+
+    <div class="pub">
+      <div class="idx">[J.3]</div>
+      <div>
+        <p class="cite-title">Comparative neutronic and radiotoxicity analysis of advanced nuclear fuels in a KLT-40S assembly</p>
+        <p class="venue">M. R. Hasan, P. M. Rafi, A. R. Antor, M. T. Ahmed, et al. · Kerntechnik, Vol. 91(2), pp. 166–182 (2026)</p>
+        <a class="doi" href="https://doi.org/10.1515/kern-2025-0095" target="_blank" rel="noopener">doi.org/10.1515/kern-2025-0095 ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Skills</h2>
+      <span class="eyebrow">06</span>
+    </div>
+    <div class="skill-groups">
+      <div class="skill-group">
+        <h3>Programming &amp; Simulation</h3>
+        <div class="tool-row">
+          <span class="tool-tag">OpenMC</span>
+          <span class="tool-tag">GEANT4</span>
+          <span class="tool-tag">Python</span>
+          <span class="tool-tag">C</span>
+          <span class="tool-tag">C++</span>
+          <span class="tool-tag">MATLAB</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Data &amp; Machine Learning</h3>
+        <div class="tool-row">
+          <span class="tool-tag">Regression</span>
+          <span class="tool-tag">Physics-Informed NN</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Web</h3>
+        <div class="tool-row">
+          <span class="tool-tag">HTML</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Other Tools</h3>
+        <div class="tool-row">
+          <span class="tool-tag">Microsoft Office</span>
+          <span class="tool-tag">Canva</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="honors">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Honors, Leadership &amp; Service</h2>
+      <span class="eyebrow">07</span>
+    </div>
+
+    <div class="list-block">
+      <h3>Honors &amp; Awards</h3>
+      <div class="row-item">
+        <div><div class="who">National Science and Technology (NST) Fellowship</div><div class="sub">Ministry of Science and Technology (MOST) — based on post-graduate research proposal</div></div>
+        <div class="when">Jan 2026</div>
+      </div>
+      <div class="row-item">
+        <div><div class="who">1st Runner-up, Poster Presentation</div><div class="sub">Material Fest 1.0, MRS DU — presented undergraduate thesis</div></div>
+        <div class="when">Aug 2025</div>
+      </div>
+      <div class="row-item">
+        <div><div class="who">Undergraduate Scholarship</div><div class="sub">University of Dhaka — academic excellence, discipline &amp; conduct</div></div>
+        <div class="when">2020 – 2023</div>
+      </div>
+      <div class="row-item">
+        <div><div class="who">SSC Board Scholarship</div><div class="sub">Comilla Board</div></div>
+        <div class="when">2017</div>
+      </div>
+      <div class="row-item">
+        <div><div class="who">Top-Five Finish, three consecutive years</div><div class="sub">Ideal Students Association</div></div>
+        <div class="when">2014 – 2016</div>
+      </div>
+    </div>
+
+    <div class="list-block">
+      <h3>Leadership</h3>
+      <div class="row-item">
+        <div><div class="who">Senior Vice President</div><div class="sub">Dhaka University Students Association of Chatkhil (DUSACH) — organized university admission guidance programs</div></div>
+        <div class="when">Apr 2024 – Mar 2025</div>
+      </div>
+    </div>
+
+    <div class="list-block">
+      <h3>Volunteer</h3>
+      <div class="row-item">
+        <div><div class="who">Organizing Secretary</div><div class="sub">HDT Social-welfare Organization — free SSC-2021 coaching &amp; community programs</div></div>
+        <div class="when">2020 – 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Certifications</h2>
+      <span class="eyebrow">08</span>
+    </div>
+    <div class="row-item"><div class="who">MTV Nuclear Engineering Summer School, University of Michigan</div><div class="when">2025</div></div>
+    <div class="row-item"><div class="who">Introduction to Python — DataCamp</div><div class="when">2022</div></div>
+    <div class="row-item"><div class="who">Work Smarter, Not Harder: Time Management — Coursera</div><div class="when">Oct 2020</div></div>
+    <div class="row-item"><div class="who">Introduction to Engineering Mechanics — Coursera</div><div class="when">Sep 2020</div></div>
+    <div class="row-item"><div class="who">Camera, Exposure and Photography — Coursera</div><div class="when">Jul 2020</div></div>
+    <div class="row-item"><div class="who">Write Professional Emails in English — Coursera</div><div class="when">Jul 2020</div></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Beyond the Lab</h2>
+      <span class="eyebrow">09</span>
+    </div>
+    <div class="meta-row">
+      <div class="meta-col">
+        <h3>Languages</h3>
+        <p>Bangla (Native)<br>English (Advanced)<br>Arabic (Beginner)</p>
+      </div>
+      <div class="meta-col">
+        <h3>Interests</h3>
+        <p>Photography, Football, Cricket, Books, Gardening</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer id="contact">
+  <div class="wrap">
+    <div class="eyebrow">Get in touch</div>
+    <h2>Let's talk reactors, research, or a collaboration.</h2>
+    <p class="lede">Open to research collaborations, graduate opportunities, and conversations about reactor physics, neutronics, and computational modeling. References available on request.</p>
+    <div class="cta-row">
+      <a class="btn primary" href="mailto:antor9p@gmail.com">antor9p@gmail.com</a>
+      <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+    <div class="fine">
+      <span>© 2026 Abdur Rahman Antor</span>
+      <span>Dept. of Nuclear Engineering, University of Dhaka</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
