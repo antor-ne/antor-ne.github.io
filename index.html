@@ -19,6 +19,11 @@
     --tag-bg: #e5f0f6;
     --tag-ink: #1c6fa5;
     --white: #ffffff;
+
+    --amber: #d99a2b;
+    --amber-bg: #faf1de;
+    --teal: #1f8a7a;
+    --teal-bg: #e3f3ef;
   }
 
   *{box-sizing:border-box; margin:0; padding:0;}
@@ -89,6 +94,9 @@
     padding:96px 0 84px;
     overflow:hidden;
     border-bottom:1px solid var(--line);
+    background:
+      radial-gradient(560px 420px at 88% -8%, rgba(63,168,221,0.14), transparent 60%),
+      radial-gradient(420px 320px at 100% 60%, rgba(217,154,43,0.10), transparent 65%);
   }
   .hero-inner{ position:relative; z-index:2; }
   .hero .eyebrow{ margin-bottom:22px; }
@@ -128,6 +136,68 @@
   .btn:hover{ background:var(--ink); color:var(--bg); }
   .btn.primary{ background:var(--accent); border-color:var(--accent); color:#fff; }
   .btn.primary:hover{ background:var(--accent-bright); border-color:var(--accent-bright); color:#fff; }
+
+  /* ---------- Photo placeholders ---------- */
+  /* HOW TO ADD YOUR OWN PHOTOS (via GitHub):
+     1. In your repo, create a folder named "images" next to this index.html.
+     2. Upload your photo with the exact filename shown in each frame below
+        (e.g. images/profile.jpg). GitHub → Add file → Upload files.
+     3. That's it — once the file exists at that path, it replaces the
+        placeholder automatically. No code changes needed. */
+  .photo-frame{
+    position:relative; overflow:hidden;
+    background:var(--tag-bg);
+    border:1px solid var(--line);
+  }
+  .photo-frame img{
+    display:block; width:100%; height:100%; object-fit:cover;
+  }
+  .photo-frame .img-fallback{
+    display:none; position:absolute; inset:0;
+    flex-direction:column; align-items:center; justify-content:center;
+    gap:8px; text-align:center; padding:16px;
+    background:
+      repeating-linear-gradient(135deg, var(--tag-bg), var(--tag-bg) 10px, #dfeaf0 10px, #dfeaf0 20px);
+    border:1.5px dashed var(--accent);
+  }
+  .photo-frame.img-missing .img-fallback{ display:flex; }
+  .photo-frame.img-missing img{ display:none; }
+  .img-fallback .icon{ font-size:22px; opacity:0.7; }
+  .img-fallback p{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; color:var(--muted);
+    line-height:1.5;
+  }
+  .img-fallback code{
+    display:inline-block; margin-top:2px;
+    background:var(--white); border:1px solid var(--line); border-radius:3px;
+    padding:2px 6px; color:var(--accent); font-size:10.5px;
+  }
+
+  .hero-photo{
+    width:168px; height:168px; border-radius:50%;
+    flex-shrink:0;
+    box-shadow:0 0 0 6px var(--white), 0 0 0 7px var(--line);
+  }
+  .hero-photo .img-fallback{ border-radius:50%; border:1.5px dashed var(--accent); }
+  .hero-top{ display:flex; align-items:flex-start; gap:36px; flex-wrap:wrap; }
+  @media (max-width:640px){ .hero-photo{ width:120px; height:120px; } }
+
+  .gallery-grid{
+    display:grid; grid-template-columns:repeat(4, 1fr); gap:14px;
+  }
+  .gallery-grid .photo-frame{ aspect-ratio:4/5; border-radius:4px; }
+  .gallery-grid .photo-frame .img-fallback{ padding:10px; }
+  .gallery-grid .img-fallback p{ font-size:10px; }
+  @media (max-width:760px){ .gallery-grid{ grid-template-columns:repeat(2, 1fr); } }
+
+  .project-photo{ aspect-ratio:16/9; border-radius:4px; margin-bottom:20px; }
+
+  /* colored interest-card accents */
+  .interest-card{ border-top:3px solid var(--accent); }
+  .interest-card.c-teal{ border-top-color:var(--teal); }
+  .interest-card.c-teal .tag{ color:var(--teal); }
+  .interest-card.c-amber{ border-top-color:var(--amber); }
+  .interest-card.c-amber .tag{ color:var(--amber); }
 
   /* neutron-track svg */
   .hero-svg{
@@ -291,6 +361,7 @@
     <nav class="links">
       <a href="#work">Experience</a>
       <a href="#education">Education</a>
+      <a href="#gallery">Gallery</a>
       <a href="#publications">Publications</a>
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
@@ -313,14 +384,25 @@
     <circle cx="260" cy="260" r="150" stroke="#1c6fa5" stroke-width="1" opacity="0.08"/>
   </svg>
   <div class="wrap hero-inner">
-    <div class="eyebrow">Dept. of Nuclear Engineering · University of Dhaka</div>
-    <h1>Abdur Rahman<br>Antor</h1>
-    <div class="role" style="font-size:20px; margin-top:14px;">Reactor physics, neutronics &amp; computational modeling</div>
-    <p class="lede">M.Sc. researcher building open-source neutronics tools for research reactor design — currently modeling the BAEC TRIGA Research Reactor with OpenMC, and exploring physics-informed machine learning for reactor physics and thermal hydraulics.</p>
-    <div class="cta-row">
-      <a class="btn primary" href="mailto:antor9p@gmail.com">Email me</a>
-      <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
-      <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+    <div class="hero-top">
+      <div class="photo-frame hero-photo img-missing">
+        <img src="images/profile.jpg" alt="Abdur Rahman Antor" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback">
+          <span class="icon">📷</span>
+          <p>Your photo here<br><code>images/profile.jpg</code></p>
+        </div>
+      </div>
+      <div>
+        <div class="eyebrow">Dept. of Nuclear Engineering · University of Dhaka</div>
+        <h1>Abdur Rahman<br>Antor</h1>
+        <div class="role" style="font-size:20px; margin-top:14px;">Reactor physics, neutronics &amp; computational modeling</div>
+        <p class="lede">M.Sc. researcher building open-source neutronics tools for research reactor design — currently modeling the BAEC TRIGA Research Reactor with OpenMC, and exploring physics-informed machine learning for reactor physics and thermal hydraulics.</p>
+        <div class="cta-row">
+          <a class="btn primary" href="mailto:antor9p@gmail.com">Email me</a>
+          <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
+          <a class="btn" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -336,15 +418,15 @@
         <div class="tag">SIMULATION</div>
         <p>Computational nuclear engineering tools — GEANT4 and OpenMC for particle transport and reactor modeling.</p>
       </div>
-      <div class="interest-card">
+      <div class="interest-card c-teal">
         <div class="tag">SOFTWARE</div>
         <p>Code development in Python, built around real reactor data and research workflows.</p>
       </div>
-      <div class="interest-card">
+      <div class="interest-card c-amber">
         <div class="tag">MACHINE LEARNING</div>
         <p>Regression models and physics-informed neural networks applied to reactor behavior.</p>
       </div>
-      <div class="interest-card">
+      <div class="interest-card c-teal">
         <div class="tag">CORE FOCUS</div>
         <p>Reactor physics and thermal hydraulics — the questions those tools are built to answer.</p>
       </div>
@@ -438,6 +520,13 @@
       <span class="eyebrow">04</span>
     </div>
     <div class="project-card">
+      <div class="photo-frame project-photo img-missing">
+        <img src="images/project-control-rod.jpg" alt="Automated control-rod project" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback">
+          <span class="icon">📷</span>
+          <p>Add a project photo<br><code>images/project-control-rod.jpg</code></p>
+        </div>
+      </div>
       <h3>Automated Control Strategies of a Dummy Reactor</h3>
       <div class="when">December 2023</div>
       <p>Built around the integral control rod worth curve collected from sample data of the BAEC TRIGA Mark-II Research Reactor. Demonstrates control rod movement during start-up and adjustment for smooth, stable operation.</p>
@@ -454,11 +543,38 @@
   </div>
 </section>
 
+<section id="gallery">
+  <div class="wrap reveal">
+    <div class="section-head">
+      <h2>Gallery</h2>
+      <span class="eyebrow">05</span>
+    </div>
+    <div class="gallery-grid">
+      <div class="photo-frame img-missing">
+        <img src="images/gallery-1.jpg" alt="Lab or reactor site photo" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback"><span class="icon">📷</span><p><code>images/gallery-1.jpg</code></p></div>
+      </div>
+      <div class="photo-frame img-missing">
+        <img src="images/gallery-2.jpg" alt="Conference or poster session photo" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback"><span class="icon">📷</span><p><code>images/gallery-2.jpg</code></p></div>
+      </div>
+      <div class="photo-frame img-missing">
+        <img src="images/gallery-3.jpg" alt="Team or fieldwork photo" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback"><span class="icon">📷</span><p><code>images/gallery-3.jpg</code></p></div>
+      </div>
+      <div class="photo-frame img-missing">
+        <img src="images/gallery-4.jpg" alt="Award or presentation photo" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')">
+        <div class="img-fallback"><span class="icon">📷</span><p><code>images/gallery-4.jpg</code></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="publications">
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Publications</h2>
-      <span class="eyebrow">05</span>
+      <span class="eyebrow">06</span>
     </div>
 
     <div class="pub">
@@ -494,7 +610,7 @@
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Skills</h2>
-      <span class="eyebrow">06</span>
+      <span class="eyebrow">07</span>
     </div>
     <div class="skill-groups">
       <div class="skill-group">
@@ -536,7 +652,7 @@
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Honors, Leadership &amp; Service</h2>
-      <span class="eyebrow">07</span>
+      <span class="eyebrow">08</span>
     </div>
 
     <div class="list-block">
@@ -585,7 +701,7 @@
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Certifications</h2>
-      <span class="eyebrow">08</span>
+      <span class="eyebrow">09</span>
     </div>
     <div class="row-item"><div class="who">MTV Nuclear Engineering Summer School, University of Michigan</div><div class="when">2025</div></div>
     <div class="row-item"><div class="who">Introduction to Python — DataCamp</div><div class="when">2022</div></div>
@@ -600,7 +716,7 @@
   <div class="wrap reveal">
     <div class="section-head">
       <h2>Beyond the Lab</h2>
-      <span class="eyebrow">09</span>
+      <span class="eyebrow">10</span>
     </div>
     <div class="meta-row">
       <div class="meta-col">
