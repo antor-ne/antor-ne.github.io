@@ -97,42 +97,58 @@
             color: transparent;
         }
 
-        /* ── FIXED DYNAMIC BACKGROUND CORE (uniform particle motion) ── */
+        /* ── FIXED REACTOR-PHYSICS BACKGROUND ──
+           The background represents a simplified physical reactor cross-section:
+           hexagonal fuel geometry, vertical coolant flow, and neutron transport.
+           Motion is directional and continuous rather than decorative rotation. */
         #global-core-bg {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 0;
-            width: 95vw;
-            max-width: 1000px;
-            height: 95vw;
-            max-height: 1000px;
-            opacity: 0.07;
+            width: 92vw;
+            max-width: 1080px;
+            height: 92vw;
+            max-height: 1080px;
+            opacity: 0.075;
             pointer-events: none;
-            animation: rotateGlobal 180s linear infinite;
-        }
-        #global-core-bg .ring {
-            animation: ringPulse 8s ease-in-out infinite;
-        }
-        #global-core-bg .neutron-path {
-            animation: neutronTravel 6s linear infinite;
-        }
-        #global-core-bg .orbital-group {
-            animation: orbit 24s linear infinite;
-            transform-origin: 50% 50%;
-        }
-        #global-core-bg .orbital-group-reverse {
-            animation: orbit 32s linear infinite reverse;
-            transform-origin: 50% 50%;
-        }
-        #global-core-bg .node-pulse {
-            animation: nodePulse 3s ease-in-out infinite;
         }
 
-        @keyframes rotateGlobal {
-            from { transform: translate(-50%, -50%) rotate(0deg); }
-            to { transform: translate(-50%, -50%) rotate(360deg); }
+        #global-core-bg .coolant-stream {
+            animation: coolantRise 10s linear infinite;
+        }
+
+        #global-core-bg .coolant-stream.slow { animation-duration: 15s; }
+        #global-core-bg .coolant-stream.fast { animation-duration: 7s; }
+
+        #global-core-bg .neutron-track {
+            stroke-dasharray: 2 18;
+            animation: neutronTransport 4.5s linear infinite;
+        }
+
+        #global-core-bg .neutron-track.delay-1 { animation-delay: -1.4s; }
+        #global-core-bg .neutron-track.delay-2 { animation-delay: -2.8s; }
+        #global-core-bg .neutron-track.delay-3 { animation-delay: -3.6s; }
+
+        #global-core-bg .thermal-field {
+            animation: thermalRise 8s ease-in-out infinite;
+        }
+
+        @keyframes coolantRise {
+            from { transform: translateY(35px); opacity: 0; }
+            12% { opacity: .65; }
+            78% { opacity: .55; }
+            to { transform: translateY(-210px); opacity: 0; }
+        }
+
+        @keyframes neutronTransport {
+            to { stroke-dashoffset: -120; }
+        }
+
+        @keyframes thermalRise {
+            0%, 100% { opacity: .12; transform: scaleY(.96); }
+            50% { opacity: .22; transform: scaleY(1.02); }
         }
 
         /* ── Top Navigation ── */
@@ -357,59 +373,54 @@
             font-size: 10px;
         }
 
-        /* ── Dynamic Core SVG ── */
+        /* ── Physical reactor-core illustration ── */
         .hero-core-svg {
-            width: 320px;
-            height: 320px;
-            animation: corePulse 5s ease-in-out infinite;
-            transform-origin: center;
-            filter: drop-shadow(0 0 40px rgba(111, 224, 255, 0.15));
-        }
-        .hero-core-svg .ring {
-            animation: ringPulse 5s ease-in-out infinite;
-        }
-        .hero-core-svg .neutron-path {
-            animation: neutronTravel 3.5s linear infinite;
-            stroke-dasharray: 4 12;
-            stroke-width: 1.5;
-        }
-        .hero-core-svg .orbital-group {
-            animation: orbit 10s linear infinite;
-            transform-origin: 260px 260px;
-        }
-        .hero-core-svg .orbital-group-reverse {
-            animation: orbit 15s linear infinite reverse;
-            transform-origin: 260px 260px;
-        }
-        .hero-core-svg .node-pulse {
-            animation: nodePulse 2s ease-in-out infinite;
+            width: 330px;
+            height: 330px;
+            filter: drop-shadow(0 0 30px rgba(111, 224, 255, 0.10));
         }
 
-        @keyframes orbit {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        .hero-core-svg .coolant-stream {
+            animation: coolantRiseHero 5.5s linear infinite;
         }
-        @keyframes nodePulse {
-            0%, 100% { opacity: 0.5; transform: scale(0.9); }
-            50% { opacity: 1; transform: scale(1.1); }
+
+        .hero-core-svg .coolant-stream.slow { animation-duration: 7.5s; }
+        .hero-core-svg .coolant-stream.fast { animation-duration: 4.2s; }
+
+        .hero-core-svg .neutron-track {
+            stroke-dasharray: 2 12;
+            animation: neutronTransportHero 2.8s linear infinite;
+        }
+
+        .hero-core-svg .neutron-track.delay-1 { animation-delay: -.9s; }
+        .hero-core-svg .neutron-track.delay-2 { animation-delay: -1.8s; }
+
+        .hero-core-svg .thermal-field {
+            animation: thermalRiseHero 4.5s ease-in-out infinite;
+            transform-origin: 260px 260px;
+        }
+
+        @keyframes coolantRiseHero {
+            from { transform: translateY(18px); opacity: 0; }
+            15% { opacity: .65; }
+            80% { opacity: .5; }
+            to { transform: translateY(-100px); opacity: 0; }
+        }
+
+        @keyframes neutronTransportHero {
+            to { stroke-dashoffset: -84; }
+        }
+
+        @keyframes thermalRiseHero {
+            0%, 100% { opacity: .08; transform: scaleY(.98); }
+            50% { opacity: .16; transform: scaleY(1.03); }
         }
 
         @media (max-width: 700px) {
-            .hero-top {
-                min-height: auto;
-            }
-            .hero-core-wrapper {
-                top: -30px;
-                right: -40px;
-            }
-            .hero-core-svg {
-                width: 200px;
-                height: 200px;
-            }
-            .profile-frame {
-                width: 160px;
-                height: 160px;
-            }
+            .hero-top { min-height: auto; }
+            .hero-core-wrapper { top: -30px; right: -40px; }
+            .hero-core-svg { width: 200px; height: 200px; }
+            .profile-frame { width: 160px; height: 160px; }
         }
 
         .hero-name {
@@ -1006,45 +1017,20 @@
             color: var(--muted);
         }
 
-        /* ── Animations ── */
-        @keyframes corePulse {
-            0%, 100% { opacity: 0.85; transform: scale(1); }
-            50% { opacity: 1; transform: scale(1.03); }
-        }
-        @keyframes ringPulse {
-            0%, 100% { opacity: 0.12; }
-            50% { opacity: 0.25; }
-        }
-        @keyframes neutronTravel {
-            to { stroke-dashoffset: -200; }
-        }
+        /* ── UI animations ── */
         @keyframes statusPulse {
             0%, 100% { opacity: 1; }
-            50% { opacity: 0.35; }
+            50% { opacity: 0.45; }
         }
+
         @keyframes heroRise {
             from { opacity: 0; transform: translateY(16px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        @keyframes driftSlow {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
 
         .section-watermark {
-            animation: driftSlow 140s linear infinite;
-            transform-origin: center;
-        }
-
-        .hero-core-svg {
-            animation: corePulse 5s ease-in-out infinite;
-            transform-origin: center;
-        }
-        .hero-core-svg .ring {
-            animation: ringPulse 5s ease-in-out infinite;
-        }
-        .hero-core-svg .neutron-path {
-            animation: neutronTravel 3.5s linear infinite;
+            /* Static engineering-style geometry; no arbitrary rotation. */
+            opacity: 0.3;
         }
 
         .profile-frame,
@@ -1084,34 +1070,102 @@
 </head>
 <body>
 
-    <!-- ─── FIXED DYNAMIC BACKGROUND CORE (uniform, consistent motion) ─── -->
+    <!-- ─── FIXED PHYSICAL REACTOR-PHYSICS BACKGROUND ─── -->
     <div id="global-core-bg" aria-hidden="true">
-        <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <circle cx="260" cy="260" r="230" stroke="#6fe0ff" stroke-width="1" opacity="0.25" fill="none"/>
-            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1" opacity="0.35" fill="none"/>
-            <circle class="ring" cx="260" cy="260" r="90" stroke="#6fe0ff" stroke-width="1" opacity="0.45" fill="none"/>
-            <circle cx="260" cy="260" r="32" fill="#6fe0ff" opacity="0.08"/>
-            
-            <!-- Uniform orbital groups -->
-            <g class="orbital-group">
-                <circle cx="0" cy="-140" r="3" fill="#6fe0ff" class="node-pulse"/>
-                <circle cx="0" cy="-200" r="4" fill="#e0a838" class="node-pulse"/>
+        <svg viewBox="0 0 900 900" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <defs>
+                <linearGradient id="coolantGradient" x1="0" y1="1" x2="0" y2="0">
+                    <stop offset="0" stop-color="#2dd4bf" stop-opacity="0"/>
+                    <stop offset=".45" stop-color="#2dd4bf" stop-opacity=".65"/>
+                    <stop offset="1" stop-color="#6fe0ff" stop-opacity="0"/>
+                </linearGradient>
+                <radialGradient id="coreField">
+                    <stop offset="0" stop-color="#6fe0ff" stop-opacity=".12"/>
+                    <stop offset=".65" stop-color="#6fe0ff" stop-opacity=".035"/>
+                    <stop offset="1" stop-color="#6fe0ff" stop-opacity="0"/>
+                </radialGradient>
+            </defs>
+
+            <!-- Subtle reactor vessel / core boundary -->
+            <circle cx="450" cy="450" r="340" stroke="#6fe0ff" stroke-width="1" opacity=".16"/>
+            <circle cx="450" cy="450" r="285" stroke="#6fe0ff" stroke-width="1" opacity=".12"/>
+            <circle cx="450" cy="450" r="220" fill="url(#coreField)"/>
+
+            <!-- Simplified hexagonal fuel lattice -->
+            <g stroke="#6fe0ff" stroke-width="1" opacity=".22">
+                <path d="M450 220 L475 234 L475 263 L450 277 L425 263 L425 234 Z"/>
+                <path d="M400 249 L425 263 L425 292 L400 306 L375 292 L375 263 Z"/>
+                <path d="M500 249 L525 263 L525 292 L500 306 L475 292 L475 263 Z"/>
+                <path d="M350 278 L375 292 L375 321 L350 335 L325 321 L325 292 Z"/>
+                <path d="M450 278 L475 292 L475 321 L450 335 L425 321 L425 292 Z"/>
+                <path d="M550 278 L575 292 L575 321 L550 335 L525 321 L525 292 Z"/>
+                <path d="M300 307 L325 321 L325 350 L300 364 L275 350 L275 321 Z"/>
+                <path d="M400 307 L425 321 L425 350 L400 364 L375 350 L375 321 Z"/>
+                <path d="M500 307 L525 321 L525 350 L500 364 L475 350 L475 321 Z"/>
+                <path d="M600 307 L625 321 L625 350 L600 364 L575 350 L575 321 Z"/>
+                <path d="M350 336 L375 350 L375 379 L350 393 L325 379 L325 350 Z"/>
+                <path d="M450 336 L475 350 L475 379 L450 393 L425 379 L425 350 Z"/>
+                <path d="M550 336 L575 350 L575 379 L550 393 L525 379 L525 350 Z"/>
+                <path d="M400 365 L425 379 L425 408 L400 422 L375 408 L375 379 Z"/>
+                <path d="M500 365 L525 379 L525 408 L500 422 L475 408 L475 379 Z"/>
+                <path d="M350 394 L375 408 L375 437 L350 451 L325 437 L325 408 Z"/>
+                <path d="M450 394 L475 408 L475 437 L450 451 L425 437 L425 408 Z"/>
+                <path d="M550 394 L575 408 L575 437 L550 451 L525 437 L525 408 Z"/>
+                <path d="M400 423 L425 437 L425 466 L400 480 L375 466 L375 437 Z"/>
+                <path d="M500 423 L525 437 L525 466 L500 480 L475 466 L475 437 Z"/>
+                <path d="M450 452 L475 466 L475 495 L450 509 L425 495 L425 466 Z"/>
+                <path d="M400 481 L425 495 L425 524 L400 538 L375 524 L375 495 Z"/>
+                <path d="M500 481 L525 495 L525 524 L500 538 L475 524 L475 495 Z"/>
+                <path d="M450 510 L475 524 L475 553 L450 567 L425 553 L425 524 Z"/>
+                <path d="M350 452 L375 466 L375 495 L350 509 L325 495 L325 466 Z"/>
+                <path d="M550 452 L575 466 L575 495 L550 509 L525 495 L525 466 Z"/>
             </g>
-            <g class="orbital-group-reverse">
-                <circle cx="0" cy="-180" r="3.5" fill="#2dd4bf" class="node-pulse"/>
+
+            <!-- Fuel pins / control positions -->
+            <g fill="#6fe0ff" opacity=".16">
+                <circle cx="450" cy="249" r="5"/>
+                <circle cx="400" cy="278" r="5"/>
+                <circle cx="500" cy="278" r="5"/>
+                <circle cx="350" cy="307" r="5"/>
+                <circle cx="450" cy="307" r="5"/>
+                <circle cx="550" cy="307" r="5"/>
+                <circle cx="400" cy="336" r="5"/>
+                <circle cx="500" cy="336" r="5"/>
+                <circle cx="350" cy="365" r="5"/>
+                <circle cx="450" cy="365" r="5"/>
+                <circle cx="550" cy="365" r="5"/>
+                <circle cx="400" cy="394" r="5"/>
+                <circle cx="500" cy="394" r="5"/>
+                <circle cx="450" cy="423" r="5"/>
+                <circle cx="350" cy="423" r="5"/>
+                <circle cx="550" cy="423" r="5"/>
+                <circle cx="400" cy="452" r="5"/>
+                <circle cx="500" cy="452" r="5"/>
+                <circle cx="450" cy="481" r="5"/>
+                <circle cx="400" cy="510" r="5"/>
+                <circle cx="500" cy="510" r="5"/>
+                <circle cx="450" cy="539" r="5"/>
             </g>
-            
-            <!-- Uniform neutron paths (consistent dasharray and speed) -->
-            <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
-            <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
-            <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
-            <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
-            
-            <!-- Uniform node pulses -->
-            <circle class="node-pulse" cx="470" cy="140" r="4" fill="#6fe0ff" opacity="0.7"/>
-            <circle class="node-pulse" cx="90" cy="70" r="3" fill="#6fe0ff" opacity="0.6"/>
-            <circle class="node-pulse" cx="190" cy="480" r="3.5" fill="#6fe0ff" opacity="0.65"/>
-            <circle class="node-pulse" cx="470" cy="400" r="3" fill="#6fe0ff" opacity="0.5"/>
+
+            <!-- Coolant flow: upward, because the intended motion is physical and directional -->
+            <g stroke="url(#coolantGradient)" stroke-width="2" stroke-linecap="round">
+                <path class="coolant-stream" d="M300 700 C300 620 320 570 320 470 C320 390 300 330 300 240"/>
+                <path class="coolant-stream slow" d="M370 720 C370 630 390 570 390 480 C390 390 370 300 370 190"/>
+                <path class="coolant-stream fast" d="M450 750 C450 650 450 580 450 500 C450 400 450 310 450 150"/>
+                <path class="coolant-stream slow" d="M530 720 C530 630 510 570 510 480 C510 390 530 300 530 190"/>
+                <path class="coolant-stream" d="M600 700 C600 620 580 570 580 470 C580 390 600 330 600 240"/>
+            </g>
+
+            <!-- Neutron transport: directional paths with occasional scattering -->
+            <g fill="none" stroke="#e0a838" stroke-width="1.3" opacity=".48">
+                <path class="neutron-track" d="M190 300 L330 365 L450 423 L575 390 L710 470"/>
+                <path class="neutron-track delay-1" d="M260 600 L350 510 L450 481 L520 400 L650 330"/>
+                <path class="neutron-track delay-2" d="M220 450 L330 430 L400 360 L500 365 L650 410"/>
+                <path class="neutron-track delay-3" d="M520 650 L500 550 L450 481 L430 390 L470 300"/>
+            </g>
+
+            <!-- Low-frequency thermal field -->
+            <ellipse class="thermal-field" cx="450" cy="455" rx="190" ry="250" fill="url(#coreField)"/>
         </svg>
     </div>
 
@@ -1166,71 +1220,87 @@
                     <div class="hero-core-wrapper">
                         <svg class="hero-core-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <defs>
-                                <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#6fe0ff" stop-opacity="0.55"/>
-                                    <stop offset="35%" stop-color="#2dd4bf" stop-opacity="0.25"/>
-                                    <stop offset="70%" stop-color="#4fb8e8" stop-opacity="0.10"/>
-                                    <stop offset="100%" stop-color="#4fb8e8" stop-opacity="0"/>
+                                <radialGradient id="heroCoreField">
+                                    <stop offset="0" stop-color="#6fe0ff" stop-opacity=".16"/>
+                                    <stop offset=".65" stop-color="#6fe0ff" stop-opacity=".035"/>
+                                    <stop offset="1" stop-color="#6fe0ff" stop-opacity="0"/>
                                 </radialGradient>
-                                <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
-                                    <stop offset="0%" stop-color="#e0a838" stop-opacity="0.20"/>
-                                    <stop offset="60%" stop-color="#e0a838" stop-opacity="0.05"/>
-                                    <stop offset="100%" stop-color="#e0a838" stop-opacity="0"/>
-                                </radialGradient>
+                                <linearGradient id="heroCoolant" x1="0" y1="1" x2="0" y2="0">
+                                    <stop offset="0" stop-color="#2dd4bf" stop-opacity="0"/>
+                                    <stop offset=".5" stop-color="#2dd4bf" stop-opacity=".75"/>
+                                    <stop offset="1" stop-color="#6fe0ff" stop-opacity="0"/>
+                                </linearGradient>
                             </defs>
-                            <circle cx="260" cy="260" r="230" fill="url(#coreGlow)"/>
-                            <circle cx="260" cy="260" r="230" fill="url(#amberGlow)"/>
-                            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1.2" opacity="0.15"/>
-                            <circle class="ring" cx="260" cy="260" r="100" stroke="#6fe0ff" stroke-width="1" opacity="0.20"/>
-                            <circle class="ring" cx="260" cy="260" r="50" stroke="#e0a838" stroke-width="1.5" opacity="0.25"/>
-                            <circle cx="260" cy="260" r="32" fill="#0e1a2b" opacity="0.7" stroke="#6fe0ff" stroke-width="1" opacity="0.4"/>
-                            
-                            <!-- Uniform Orbiting Particles -->
-                            <g class="orbital-group">
-                                <circle cx="0" cy="-130" r="4" fill="#6fe0ff" class="node-pulse"/>
-                                <circle cx="0" cy="-190" r="5" fill="#e0a838" class="node-pulse"/>
-                                <circle cx="0" cy="-80" r="3" fill="#2dd4bf" class="node-pulse"/>
-                            </g>
-                            <g class="orbital-group-reverse">
-                                <circle cx="0" cy="-160" r="4.5" fill="#6fe0ff" class="node-pulse"/>
-                                <circle cx="0" cy="-220" r="3" fill="#e0a838" class="node-pulse"/>
+
+                            <circle cx="260" cy="260" r="225" fill="url(#heroCoreField)"/>
+                            <circle cx="260" cy="260" r="190" stroke="#6fe0ff" stroke-width="1" opacity=".13"/>
+                            <circle cx="260" cy="260" r="145" stroke="#6fe0ff" stroke-width="1" opacity=".10"/>
+
+                            <!-- Physical hexagonal fuel lattice -->
+                            <g stroke="#6fe0ff" stroke-width="1.2" opacity=".38">
+                                <path d="M260 115 L285 129 V158 L260 172 L235 158 V129 Z"/>
+                                <path d="M210 144 L235 158 V187 L210 201 L185 187 V158 Z"/>
+                                <path d="M310 144 L335 158 V187 L310 201 L285 187 V158 Z"/>
+                                <path d="M160 173 L185 187 V216 L160 230 L135 216 V187 Z"/>
+                                <path d="M260 173 L285 187 V216 L260 230 L235 216 V187 Z"/>
+                                <path d="M360 173 L385 187 V216 L360 230 L335 216 V187 Z"/>
+                                <path d="M210 202 L235 216 V245 L210 259 L185 245 V216 Z"/>
+                                <path d="M310 202 L335 216 V245 L310 259 L285 245 V216 Z"/>
+                                <path d="M160 231 L185 245 V274 L160 288 L135 274 V245 Z"/>
+                                <path d="M260 231 L285 245 V274 L260 288 L235 274 V245 Z"/>
+                                <path d="M360 231 L385 245 V274 L360 288 L335 274 V245 Z"/>
+                                <path d="M210 260 L235 274 V303 L210 317 L185 303 V274 Z"/>
+                                <path d="M310 260 L335 274 V303 L310 317 L285 303 V274 Z"/>
+                                <path d="M160 289 L185 303 V332 L160 346 L135 332 V303 Z"/>
+                                <path d="M260 289 L285 303 V332 L260 346 L235 332 V303 Z"/>
+                                <path d="M360 289 L385 303 V332 L360 346 L335 332 V303 Z"/>
+                                <path d="M210 318 L235 332 V361 L210 375 L185 361 V332 Z"/>
+                                <path d="M310 318 L335 332 V361 L310 375 L285 361 V332 Z"/>
+                                <path d="M260 347 L285 361 V390 L260 404 L235 390 V361 Z"/>
                             </g>
 
-                            <g fill="#6fe0ff">
-                                <circle cx="260" cy="260" r="5" opacity="0.7"/>
-                                <circle cx="286" cy="244" r="3.5" opacity="0.5"/>
-                                <circle cx="286" cy="276" r="3.5" opacity="0.5"/>
-                                <circle cx="260" cy="292" r="3.5" opacity="0.5"/>
-                                <circle cx="234" cy="276" r="3.5" opacity="0.5"/>
-                                <circle cx="234" cy="244" r="3.5" opacity="0.5"/>
-                                <circle cx="260" cy="228" r="3.5" opacity="0.5"/>
-                                <circle cx="310" cy="228" r="3" opacity="0.35"/>
-                                <circle cx="310" cy="292" r="3" opacity="0.35"/>
-                                <circle cx="210" cy="228" r="3" opacity="0.35"/>
-                                <circle cx="210" cy="292" r="3" opacity="0.35"/>
-                                <circle cx="260" cy="210" r="3" opacity="0.35"/>
-                                <circle cx="260" cy="310" r="3" opacity="0.35"/>
+                            <!-- Fuel-pin markers -->
+                            <g fill="#6fe0ff" opacity=".45">
+                                <circle cx="260" cy="143" r="4"/>
+                                <circle cx="210" cy="172" r="4"/>
+                                <circle cx="310" cy="172" r="4"/>
+                                <circle cx="160" cy="201" r="4"/>
+                                <circle cx="260" cy="201" r="4"/>
+                                <circle cx="360" cy="201" r="4"/>
+                                <circle cx="210" cy="230" r="4"/>
+                                <circle cx="310" cy="230" r="4"/>
+                                <circle cx="160" cy="259" r="4"/>
+                                <circle cx="260" cy="259" r="4"/>
+                                <circle cx="360" cy="259" r="4"/>
+                                <circle cx="210" cy="288" r="4"/>
+                                <circle cx="310" cy="288" r="4"/>
+                                <circle cx="160" cy="317" r="4"/>
+                                <circle cx="260" cy="317" r="4"/>
+                                <circle cx="360" cy="317" r="4"/>
+                                <circle cx="210" cy="346" r="4"/>
+                                <circle cx="310" cy="346" r="4"/>
+                                <circle cx="260" cy="375" r="4"/>
                             </g>
-                            <g fill="#e0a838" opacity="0.4">
-                                <circle cx="310" cy="244" r="2.5"/>
-                                <circle cx="310" cy="276" r="2.5"/>
-                                <circle cx="210" cy="244" r="2.5"/>
-                                <circle cx="210" cy="276" r="2.5"/>
+
+                            <!-- Directional coolant flow -->
+                            <g stroke="url(#heroCoolant)" stroke-width="2" stroke-linecap="round">
+                                <path class="coolant-stream slow" d="M180 430 C180 350 190 315 190 240 C190 190 180 145 180 90"/>
+                                <path class="coolant-stream fast" d="M220 450 C220 370 230 330 230 250 C230 180 220 130 220 65"/>
+                                <path class="coolant-stream" d="M260 455 C260 370 260 320 260 250 C260 170 260 115 260 45"/>
+                                <path class="coolant-stream fast" d="M300 450 C300 370 290 330 290 250 C290 180 300 130 300 65"/>
+                                <path class="coolant-stream slow" d="M340 430 C340 350 330 315 330 240 C330 190 340 145 340 90"/>
                             </g>
-                            
-                            <!-- Uniform Extended Ray Paths -->
-                            <path class="neutron-path" d="M260 260 C 360 160, 460 180, 510 110" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.6"/>
-                            <path class="neutron-path" d="M260 260 C 160 180, 110 90, 60 40" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.5"/>
-                            <path class="neutron-path" d="M260 260 C 190 360, 220 440, 160 510" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.55"/>
-                            <path class="neutron-path" d="M260 260 C 380 320, 440 380, 510 430" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.45"/>
-                            <path class="neutron-path" d="M260 260 C 180 180, 120 130, 60 160" stroke="#e0a838" stroke-width="1.2" stroke-dasharray="3 8" opacity="0.4"/>
-                            
-                            <!-- Uniform Pulsing End Nodes -->
-                            <circle cx="510" cy="110" r="4.5" fill="#6fe0ff" class="node-pulse" opacity="0.85"/>
-                            <circle cx="60" cy="40" r="3.5" fill="#6fe0ff" class="node-pulse" opacity="0.7"/>
-                            <circle cx="160" cy="510" r="4" fill="#6fe0ff" class="node-pulse" opacity="0.75"/>
-                            <circle cx="510" cy="430" r="3.5" fill="#6fe0ff" class="node-pulse" opacity="0.6"/>
-                            <circle cx="60" cy="160" r="3" fill="#e0a838" class="node-pulse" opacity="0.6"/>
+
+                            <!-- Neutron transport / scattering paths -->
+                            <g fill="none" stroke="#e0a838" stroke-width="1.5" opacity=".65">
+                                <path class="neutron-track" d="M95 190 L180 230 L260 259 L325 225 L420 255"/>
+                                <path class="neutron-track delay-1" d="M115 355 L205 315 L260 259 L320 285 L415 335"/>
+                                <path class="neutron-track delay-2" d="M260 420 L260 375 L260 317 L305 270 L390 215"/>
+                            </g>
+
+                            <!-- Central active region -->
+                            <circle cx="260" cy="259" r="34" stroke="#6fe0ff" stroke-width="1" opacity=".24"/>
+                            <circle cx="260" cy="259" r="13" fill="#6fe0ff" opacity=".12"/>
                         </svg>
                     </div>
                 </div>
@@ -1611,30 +1681,13 @@
             });
         });
 
-        // ── Background Drift ──
-        function updateBackgroundDrift() {
-            const scrollY = window.scrollY;
-            const shiftX = scrollY * 0.03;
-            const shiftY = scrollY * 0.05;
-            const dot1X = shiftX;
-            const dot1Y = shiftY;
-            const dot2X = 21 + shiftX;
-            const dot2Y = 18.2 + shiftY;
-            document.body.style.backgroundPosition = 
-                `${dot1X}px ${dot1Y}px, ${dot2X}px ${dot2Y}px, 0 0, 0 0, 0 0, 0 0`;
-        }
-
-        let ticking = false;
-        window.addEventListener('scroll', () => {
-            if (!ticking) {
-                window.requestAnimationFrame(() => {
-                    updateBackgroundDrift();
-                    ticking = false;
-                });
-                ticking = true;
-            }
+        // ── Background: static engineering grid ──
+        // Deliberately avoid arbitrary screen-space drifting. The physical
+        // motion is represented by the reactor illustration itself.
+        window.addEventListener('load', () => {
+            document.body.style.backgroundPosition =
+                '0 0, 21px 18.2px, 0 0, 0 0, 0 0, 0 0';
         });
-        window.addEventListener('load', updateBackgroundDrift);
 
         // ── Mouse Tracking for Hero Core (Parallax effect) ──
         const overview = document.getElementById('overview');
