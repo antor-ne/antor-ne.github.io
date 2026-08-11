@@ -229,10 +229,75 @@
             align-items: center;
             text-align: center;
         }
+
+        /* ---- Profile Photo (New) ---- */
+        .profile-frame {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--line);
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(111, 224, 255, 0.08);
+            transition: border-color .3s ease, box-shadow .3s ease;
+            background: var(--panel);
+            position: relative;
+        }
+        .profile-frame:hover {
+            border-color: var(--cyan);
+            box-shadow: 0 0 40px rgba(111, 224, 255, 0.15);
+        }
+        .profile-frame img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .profile-frame .img-fallback {
+            display: none;
+            position: absolute;
+            inset: 0;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-align: center;
+            padding: 12px;
+            background: repeating-linear-gradient(135deg, var(--panel-2), var(--panel-2) 10px, #1a2533 10px, #1a2533 20px);
+            border-radius: 50%;
+            border: 1.5px dashed var(--cyan);
+        }
+        .profile-frame.img-missing .img-fallback {
+            display: flex;
+        }
+        .profile-frame.img-missing img {
+            display: none;
+        }
+        .img-fallback .icon {
+            font-size: 22px;
+            opacity: 0.7;
+        }
+        .img-fallback p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+        .img-fallback code {
+            display: inline-block;
+            margin-top: 2px;
+            background: var(--bg);
+            border: 1px solid var(--line);
+            border-radius: 3px;
+            padding: 2px 6px;
+            color: var(--cyan);
+            font-size: 9.5px;
+        }
+
         .hero-core-svg {
             width: 320px;
             height: 320px;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             animation: corePulse 5s ease-in-out infinite;
             transform-origin: center;
             filter: drop-shadow(0 0 40px rgba(111, 224, 255, 0.10));
@@ -241,6 +306,10 @@
             .hero-core-svg {
                 width: 220px;
                 height: 220px;
+            }
+            .profile-frame {
+                width: 110px;
+                height: 110px;
             }
         }
         .hero-core-svg .ring {
@@ -317,7 +386,7 @@
             border-color: #f0c050;
         }
 
-        /* ── Research Pulse (unique element) ── */
+        /* ── Research Pulse ── */
         .research-pulse {
             display: flex;
             align-items: center;
@@ -936,6 +1005,7 @@
             animation: neutronTravel 3.5s linear infinite;
         }
 
+        .profile-frame,
         .hero-eyebrow,
         .hero-name,
         .hero-role,
@@ -945,23 +1015,26 @@
             opacity: 0;
             animation: heroRise .7s ease forwards;
         }
+        .profile-frame {
+            animation-delay: .05s;
+        }
         .hero-eyebrow {
-            animation-delay: .1s;
+            animation-delay: .15s;
         }
         .hero-name {
-            animation-delay: .2s;
+            animation-delay: .25s;
         }
         .hero-role {
-            animation-delay: .3s;
+            animation-delay: .35s;
         }
         .hero-lede {
-            animation-delay: .4s;
+            animation-delay: .45s;
         }
         .hero-cta {
-            animation-delay: .5s;
+            animation-delay: .55s;
         }
         .research-pulse {
-            animation-delay: .6s;
+            animation-delay: .65s;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -972,6 +1045,7 @@
             .section-watermark {
                 animation: none;
             }
+            .profile-frame,
             .hero-eyebrow,
             .hero-name,
             .hero-role,
@@ -1027,7 +1101,16 @@
         <!-- OVERVIEW -->
         <section id="overview">
             <div class="wrap hero-center">
-                <!-- Reactor Core SVG — central visual -->
+                <!-- Profile Photo (Restored) -->
+                <div class="profile-frame img-missing">
+                    <img src="images/profile.jpg" alt="Abdur Rahman Antor" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')" />
+                    <div class="img-fallback">
+                        <span class="icon">📷</span>
+                        <p>Add your photo<br /><code>images/profile.jpg</code></p>
+                    </div>
+                </div>
+
+                <!-- Reactor Core SVG -->
                 <svg class="hero-core-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                     <defs>
                         <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
@@ -1091,7 +1174,7 @@
                     <a class="btn amber" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
                 </div>
 
-                <!-- Research Pulse — dynamic focus indicator -->
+                <!-- Research Pulse -->
                 <div class="research-pulse">
                     <div class="pulse-indicator">
                         <span class="pulse-dot-core"></span>
