@@ -20,10 +20,8 @@
             --cyan-dark: #2dd4bf;
             --amber: #e0a838;
             --amber-glow: rgba(224, 168, 56, 0.15);
-            --cyan-glow: rgba(111, 224, 255, 0.12);
             --tag-bg: rgba(111, 224, 255, 0.08);
             --tag-ink: #7fd4f5;
-            --glow: rgba(111, 224, 255, 0.25);
         }
 
         * {
@@ -74,7 +72,7 @@
         }
 
         .wrap {
-            max-width: 800px;
+            max-width: 840px;
             margin: 0 auto;
             padding: 0 32px;
         }
@@ -104,13 +102,9 @@
             backdrop-filter: blur(14px);
             border-bottom: 1px solid var(--line);
             padding: 14px 0;
-            transition: box-shadow .3s ease;
-        }
-        .top-nav:hover {
-            box-shadow: 0 0 30px rgba(111, 224, 255, 0.04);
         }
         .nav-inner {
-            max-width: 800px;
+            max-width: 840px;
             margin: 0 auto;
             padding: 0 32px;
             display: flex;
@@ -188,7 +182,6 @@
             backdrop-filter: blur(10px);
             border: 1px solid var(--line);
             border-radius: 30px;
-            transition: border-color .3s ease, box-shadow .3s ease;
             font-family: 'IBM Plex Mono', monospace;
             font-size: 11px;
             color: var(--muted);
@@ -205,9 +198,6 @@
             box-shadow: 0 0 12px var(--cyan-dark);
             animation: statusPulse 2.4s ease-in-out infinite;
         }
-        .status-float .status-label {
-            letter-spacing: .06em;
-        }
         @media (max-width: 600px) {
             .status-float {
                 bottom: 16px;
@@ -223,21 +213,42 @@
             position: relative;
             overflow: hidden;
         }
-        .hero-center {
+
+        /* Layout: Left (Profile) | Right (Core) */
+        .hero-layout {
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 30px;
+        }
+        .hero-top {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            gap: 50px;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .hero-left {
+            flex-shrink: 0;
+        }
+        .hero-right {
+            flex-shrink: 0;
+        }
+        .hero-bottom {
             text-align: center;
+            margin-top: 10px;
+            width: 100%;
         }
 
-        /* ---- Profile Photo (New) ---- */
+        /* Profile Photo (Left) */
         .profile-frame {
-            width: 140px;
-            height: 140px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             overflow: hidden;
             border: 2px solid var(--line);
-            margin-bottom: 20px;
             box-shadow: 0 0 30px rgba(111, 224, 255, 0.08);
             transition: border-color .3s ease, box-shadow .3s ease;
             background: var(--panel);
@@ -294,23 +305,13 @@
             font-size: 9.5px;
         }
 
+        /* Dynamic Core (Right) */
         .hero-core-svg {
-            width: 320px;
-            height: 320px;
-            margin-bottom: 10px;
+            width: 300px;
+            height: 300px;
             animation: corePulse 5s ease-in-out infinite;
             transform-origin: center;
             filter: drop-shadow(0 0 40px rgba(111, 224, 255, 0.10));
-        }
-        @media (max-width: 640px) {
-            .hero-core-svg {
-                width: 220px;
-                height: 220px;
-            }
-            .profile-frame {
-                width: 110px;
-                height: 110px;
-            }
         }
         .hero-core-svg .ring {
             animation: ringPulse 5s ease-in-out infinite;
@@ -319,10 +320,25 @@
             animation: neutronTravel 3.5s linear infinite;
         }
 
+        @media (max-width: 700px) {
+            .hero-top {
+                flex-direction: column;
+                gap: 20px;
+            }
+            .hero-core-svg {
+                width: 220px;
+                height: 220px;
+            }
+            .profile-frame {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
         .hero-name {
             font-size: clamp(34px, 5.5vw, 56px);
             line-height: 1.05;
-            margin-top: 4px;
+            margin-top: 6px;
         }
         .hero-role {
             font-family: 'Fraunces', serif;
@@ -398,6 +414,7 @@
             margin-top: 28px;
             transition: border-color .3s ease, box-shadow .3s ease;
             max-width: 100%;
+            text-align: left;
         }
         .research-pulse:hover {
             border-color: var(--cyan);
@@ -593,10 +610,6 @@
             color: var(--cyan-dark);
             background: rgba(45, 212, 191, 0.12);
         }
-        .entry.type-amber .entry-kind {
-            color: var(--amber);
-            background: var(--amber-glow);
-        }
 
         /* ── Honors grid ── */
         .honors-grid {
@@ -647,26 +660,6 @@
         }
         .honor-card .photo-frame.img-missing img {
             display: none;
-        }
-        .img-fallback .icon {
-            font-size: 18px;
-            opacity: 0.7;
-        }
-        .img-fallback p {
-            font-family: 'IBM Plex Mono', monospace;
-            font-size: 10px;
-            color: var(--muted);
-            line-height: 1.5;
-        }
-        .img-fallback code {
-            display: inline-block;
-            margin-top: 2px;
-            background: var(--bg);
-            border: 1px solid var(--line);
-            border-radius: 3px;
-            padding: 2px 6px;
-            color: var(--cyan);
-            font-size: 9.5px;
         }
         .honor-year {
             position: absolute;
@@ -1005,7 +998,9 @@
             animation: neutronTravel 3.5s linear infinite;
         }
 
+        /* Hero entry animations */
         .profile-frame,
+        .hero-core-svg,
         .hero-eyebrow,
         .hero-name,
         .hero-role,
@@ -1018,23 +1013,26 @@
         .profile-frame {
             animation-delay: .05s;
         }
+        .hero-core-svg {
+            animation-delay: .1s;
+        }
         .hero-eyebrow {
-            animation-delay: .15s;
+            animation-delay: .2s;
         }
         .hero-name {
-            animation-delay: .25s;
+            animation-delay: .3s;
         }
         .hero-role {
-            animation-delay: .35s;
+            animation-delay: .4s;
         }
         .hero-lede {
-            animation-delay: .45s;
+            animation-delay: .5s;
         }
         .hero-cta {
-            animation-delay: .55s;
+            animation-delay: .6s;
         }
         .research-pulse {
-            animation-delay: .65s;
+            animation-delay: .7s;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -1046,6 +1044,7 @@
                 animation: none;
             }
             .profile-frame,
+            .hero-core-svg,
             .hero-eyebrow,
             .hero-name,
             .hero-role,
@@ -1100,88 +1099,96 @@
 
         <!-- OVERVIEW -->
         <section id="overview">
-            <div class="wrap hero-center">
-                <!-- Profile Photo (Restored) -->
-                <div class="profile-frame img-missing">
-                    <img src="images/profile.jpg" alt="Abdur Rahman Antor" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')" />
-                    <div class="img-fallback">
-                        <span class="icon">📷</span>
-                        <p>Add your photo<br /><code>images/profile.jpg</code></p>
+            <div class="wrap hero-layout">
+                
+                <!-- Top: Left (Profile) + Right (Core) -->
+                <div class="hero-top">
+                    <div class="hero-left">
+                        <div class="profile-frame img-missing">
+                            <img src="images/profile.jpg" alt="Abdur Rahman Antor" onerror="this.parentElement.classList.add('img-missing')" onload="this.parentElement.classList.remove('img-missing')" />
+                            <div class="img-fallback">
+                                <span class="icon">📷</span>
+                                <p>Add your photo<br /><code>images/profile.jpg</code></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="hero-right">
+                        <svg class="hero-core-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                            <defs>
+                                <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#6fe0ff" stop-opacity="0.55"/>
+                                    <stop offset="35%" stop-color="#2dd4bf" stop-opacity="0.25"/>
+                                    <stop offset="70%" stop-color="#4fb8e8" stop-opacity="0.10"/>
+                                    <stop offset="100%" stop-color="#4fb8e8" stop-opacity="0"/>
+                                </radialGradient>
+                                <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
+                                    <stop offset="0%" stop-color="#e0a838" stop-opacity="0.20"/>
+                                    <stop offset="60%" stop-color="#e0a838" stop-opacity="0.05"/>
+                                    <stop offset="100%" stop-color="#e0a838" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="260" cy="260" r="230" fill="url(#coreGlow)"/>
+                            <circle cx="260" cy="260" r="230" fill="url(#amberGlow)"/>
+                            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1.2" opacity="0.15"/>
+                            <circle class="ring" cx="260" cy="260" r="100" stroke="#6fe0ff" stroke-width="1" opacity="0.20"/>
+                            <circle class="ring" cx="260" cy="260" r="50" stroke="#e0a838" stroke-width="1.5" opacity="0.25"/>
+                            <circle cx="260" cy="260" r="32" fill="#0e1a2b" opacity="0.7" stroke="#6fe0ff" stroke-width="1" opacity="0.4"/>
+                            <g fill="#6fe0ff">
+                                <circle cx="260" cy="260" r="5" opacity="0.7"/>
+                                <circle cx="286" cy="244" r="3.5" opacity="0.5"/>
+                                <circle cx="286" cy="276" r="3.5" opacity="0.5"/>
+                                <circle cx="260" cy="292" r="3.5" opacity="0.5"/>
+                                <circle cx="234" cy="276" r="3.5" opacity="0.5"/>
+                                <circle cx="234" cy="244" r="3.5" opacity="0.5"/>
+                                <circle cx="260" cy="228" r="3.5" opacity="0.5"/>
+                                <circle cx="310" cy="228" r="3" opacity="0.35"/>
+                                <circle cx="310" cy="292" r="3" opacity="0.35"/>
+                                <circle cx="210" cy="228" r="3" opacity="0.35"/>
+                                <circle cx="210" cy="292" r="3" opacity="0.35"/>
+                                <circle cx="260" cy="210" r="3" opacity="0.35"/>
+                                <circle cx="260" cy="310" r="3" opacity="0.35"/>
+                            </g>
+                            <g fill="#e0a838" opacity="0.4">
+                                <circle cx="310" cy="244" r="2.5"/>
+                                <circle cx="310" cy="276" r="2.5"/>
+                                <circle cx="210" cy="244" r="2.5"/>
+                                <circle cx="210" cy="276" r="2.5"/>
+                            </g>
+                            <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.5"/>
+                            <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.4"/>
+                            <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.45"/>
+                            <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.35"/>
+                            <path class="neutron-path" d="M260 260 C 200 200, 150 150, 100 180" stroke="#e0a838" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
+                            <circle cx="470" cy="140" r="4" fill="#6fe0ff" opacity="0.8"/>
+                            <circle cx="90" cy="70" r="3" fill="#6fe0ff" opacity="0.6"/>
+                            <circle cx="190" cy="480" r="3.5" fill="#6fe0ff" opacity="0.65"/>
+                            <circle cx="470" cy="400" r="3" fill="#6fe0ff" opacity="0.5"/>
+                            <circle cx="100" cy="180" r="2.5" fill="#e0a838" opacity="0.5"/>
+                        </svg>
                     </div>
                 </div>
 
-                <!-- Reactor Core SVG -->
-                <svg class="hero-core-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                    <defs>
-                        <radialGradient id="coreGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#6fe0ff" stop-opacity="0.55"/>
-                            <stop offset="35%" stop-color="#2dd4bf" stop-opacity="0.25"/>
-                            <stop offset="70%" stop-color="#4fb8e8" stop-opacity="0.10"/>
-                            <stop offset="100%" stop-color="#4fb8e8" stop-opacity="0"/>
-                        </radialGradient>
-                        <radialGradient id="amberGlow" cx="50%" cy="50%" r="50%">
-                            <stop offset="0%" stop-color="#e0a838" stop-opacity="0.20"/>
-                            <stop offset="60%" stop-color="#e0a838" stop-opacity="0.05"/>
-                            <stop offset="100%" stop-color="#e0a838" stop-opacity="0"/>
-                        </radialGradient>
-                    </defs>
-                    <circle cx="260" cy="260" r="230" fill="url(#coreGlow)"/>
-                    <circle cx="260" cy="260" r="230" fill="url(#amberGlow)"/>
-                    <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1.2" opacity="0.15"/>
-                    <circle class="ring" cx="260" cy="260" r="100" stroke="#6fe0ff" stroke-width="1" opacity="0.20"/>
-                    <circle class="ring" cx="260" cy="260" r="50" stroke="#e0a838" stroke-width="1.5" opacity="0.25"/>
-                    <circle cx="260" cy="260" r="32" fill="#0e1a2b" opacity="0.7" stroke="#6fe0ff" stroke-width="1" opacity="0.4"/>
-                    <g fill="#6fe0ff">
-                        <circle cx="260" cy="260" r="5" opacity="0.7"/>
-                        <circle cx="286" cy="244" r="3.5" opacity="0.5"/>
-                        <circle cx="286" cy="276" r="3.5" opacity="0.5"/>
-                        <circle cx="260" cy="292" r="3.5" opacity="0.5"/>
-                        <circle cx="234" cy="276" r="3.5" opacity="0.5"/>
-                        <circle cx="234" cy="244" r="3.5" opacity="0.5"/>
-                        <circle cx="260" cy="228" r="3.5" opacity="0.5"/>
-                        <circle cx="310" cy="228" r="3" opacity="0.35"/>
-                        <circle cx="310" cy="292" r="3" opacity="0.35"/>
-                        <circle cx="210" cy="228" r="3" opacity="0.35"/>
-                        <circle cx="210" cy="292" r="3" opacity="0.35"/>
-                        <circle cx="260" cy="210" r="3" opacity="0.35"/>
-                        <circle cx="260" cy="310" r="3" opacity="0.35"/>
-                    </g>
-                    <g fill="#e0a838" opacity="0.4">
-                        <circle cx="310" cy="244" r="2.5"/>
-                        <circle cx="310" cy="276" r="2.5"/>
-                        <circle cx="210" cy="244" r="2.5"/>
-                        <circle cx="210" cy="276" r="2.5"/>
-                    </g>
-                    <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.5"/>
-                    <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.4"/>
-                    <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.45"/>
-                    <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1.2" stroke-dasharray="3 7" opacity="0.35"/>
-                    <path class="neutron-path" d="M260 260 C 200 200, 150 150, 100 180" stroke="#e0a838" stroke-width="1" stroke-dasharray="2 6" opacity="0.3"/>
-                    <circle cx="470" cy="140" r="4" fill="#6fe0ff" opacity="0.8"/>
-                    <circle cx="90" cy="70" r="3" fill="#6fe0ff" opacity="0.6"/>
-                    <circle cx="190" cy="480" r="3.5" fill="#6fe0ff" opacity="0.65"/>
-                    <circle cx="470" cy="400" r="3" fill="#6fe0ff" opacity="0.5"/>
-                    <circle cx="100" cy="180" r="2.5" fill="#e0a838" opacity="0.5"/>
-                </svg>
-
-                <div class="eyebrow hero-eyebrow">Nuclear Engineering · Reactor Physics</div>
-                <h1 class="hero-name">Abdur Rahman<br /><span class="name-accent">Antor</span></h1>
-                <div class="hero-role">Neutronics · Computational Modeling · Research Reactor Design</div>
-                <p class="hero-lede">M.Sc. researcher at the University of Dhaka, specializing in OpenMC-based reactor modeling, GEANT4 particle transport, and physics-informed machine learning for reactor behavior analysis.</p>
-                <div class="hero-cta">
-                    <a class="btn primary" href="mailto:antor9p@gmail.com">Email</a>
-                    <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
-                    <a class="btn amber" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
-                </div>
-
-                <!-- Research Pulse -->
-                <div class="research-pulse">
-                    <div class="pulse-indicator">
-                        <span class="pulse-dot-core"></span>
-                        <span class="pulse-label">Current Focus</span>
+                <!-- Bottom: Name, Title, CTA, Pulse -->
+                <div class="hero-bottom">
+                    <div class="eyebrow hero-eyebrow">Nuclear Engineering · Reactor Physics</div>
+                    <h1 class="hero-name">Abdur Rahman<br /><span class="name-accent">Antor</span></h1>
+                    <div class="hero-role">Neutronics · Computational Modeling · Research Reactor Design</div>
+                    <p class="hero-lede">M.Sc. researcher at the University of Dhaka, specializing in OpenMC-based reactor modeling, GEANT4 particle transport, and physics-informed machine learning for reactor behavior analysis.</p>
+                    <div class="hero-cta">
+                        <a class="btn primary" href="mailto:antor9p@gmail.com">Email</a>
+                        <a class="btn" href="https://github.com/antor-ne" target="_blank" rel="noopener">GitHub ↗</a>
+                        <a class="btn amber" href="#" target="_blank" rel="noopener">LinkedIn ↗</a>
                     </div>
-                    <div class="pulse-text">
-                        <strong>OpenMC</strong> · BAEC TRIGA modeling &nbsp;|&nbsp; <strong>GEANT4</strong> · particle transport &nbsp;|&nbsp; <strong>PINN</strong> · reactor physics
+
+                    <div class="research-pulse">
+                        <div class="pulse-indicator">
+                            <span class="pulse-dot-core"></span>
+                            <span class="pulse-label">Current Focus</span>
+                        </div>
+                        <div class="pulse-text">
+                            <strong>OpenMC</strong> · BAEC TRIGA modeling &nbsp;|&nbsp; <strong>GEANT4</strong> · particle transport &nbsp;|&nbsp; <strong>PINN</strong> · reactor physics
+                        </div>
                     </div>
                 </div>
             </div>
