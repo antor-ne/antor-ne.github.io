@@ -34,7 +34,6 @@
         }
 
         body {
-            /* Background will be shifted via JS for parallax drift */
             background:
                 radial-gradient(circle, rgba(111, 224, 255, 0.05) 1.2px, transparent 1.4px),
                 radial-gradient(circle, rgba(111, 224, 255, 0.05) 1.2px, transparent 1.4px),
@@ -43,7 +42,6 @@
                 radial-gradient(800px 620px at 60% 110%, rgba(224, 168, 56, 0.05), transparent 65%),
                 var(--bg);
             background-size: 42px 36.4px, 42px 36.4px, auto, auto, auto, auto;
-            /* initial position: 0 0, 21px 18.2px ... */
             background-position: 0 0, 21px 18.2px, 0 0, 0 0, 0 0, 0 0;
             background-attachment: fixed;
             color: var(--ink);
@@ -51,7 +49,8 @@
             font-size: 16px;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            transition: background-position 0.1s ease-out;
+            transition: background-position 0.08s ease-out;
+            overflow-x: hidden;
         }
 
         ::selection {
@@ -78,6 +77,8 @@
             max-width: 840px;
             margin: 0 auto;
             padding: 0 32px;
+            position: relative;
+            z-index: 2;
         }
 
         h1,
@@ -94,6 +95,41 @@
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+        }
+
+        /* ── Dynamic Background Core (subtle, fixed, flows through whole page) ── */
+        #global-core-bg {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            width: 90vw;
+            max-width: 900px;
+            height: 90vw;
+            max-height: 900px;
+            opacity: 0.04;
+            pointer-events: none;
+            animation: rotateGlobal 120s linear infinite;
+        }
+        #global-core-bg .ring {
+            animation: ringPulse 6s ease-in-out infinite;
+        }
+        #global-core-bg .neutron-path {
+            animation: neutronTravel 4s linear infinite;
+        }
+        #global-core-bg .orbital-group {
+            animation: orbit 20s linear infinite;
+            transform-origin: 50% 50%;
+        }
+        #global-core-bg .orbital-group-reverse {
+            animation: orbit 30s linear infinite reverse;
+            transform-origin: 50% 50%;
+        }
+
+        @keyframes rotateGlobal {
+            from { transform: translate(-50%, -50%) rotate(0deg); }
+            to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
         /* ── Top Navigation ── */
@@ -214,7 +250,8 @@
         #overview {
             padding: 48px 0 60px;
             position: relative;
-            overflow: visible; /* let the top-right core spill out */
+            overflow: visible;
+            z-index: 1;
         }
 
         .hero-layout {
@@ -224,26 +261,27 @@
             gap: 30px;
         }
 
-        /* Profile exactly centered */
         .hero-top {
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
             position: relative;
-            min-height: 280px; /* give space for the corner core */
+            min-height: 280px;
         }
         .hero-profile-wrapper {
             z-index: 2;
         }
 
-        /* Nuclear core in top-right corner */
+        /* ── Main Core (Top-Right Corner) with Mouse Tracking ── */
         .hero-core-wrapper {
             position: absolute;
             top: -60px;
             right: -80px;
             z-index: 1;
             pointer-events: none;
+            transition: transform 0.15s ease-out;
+            will-change: transform;
         }
 
         .hero-bottom {
@@ -252,7 +290,7 @@
             width: 100%;
         }
 
-        /* Profile Photo (Centered) - Optimized size */
+        /* Profile Photo (Centered) */
         .profile-frame {
             width: 220px;
             height: 220px;
@@ -316,10 +354,10 @@
             font-size: 10px;
         }
 
-        /* Dynamic Core (Top-Right Corner) - Optimized size */
+        /* ── Dynamic Core SVG ── */
         .hero-core-svg {
-            width: 300px;
-            height: 300px;
+            width: 320px;
+            height: 320px;
             animation: corePulse 5s ease-in-out infinite;
             transform-origin: center;
             filter: drop-shadow(0 0 40px rgba(111, 224, 255, 0.15));
@@ -329,8 +367,28 @@
         }
         .hero-core-svg .neutron-path {
             animation: neutronTravel 3.5s linear infinite;
-            stroke-dasharray: 4 10;
+            stroke-dasharray: 4 12;
             stroke-width: 1.5;
+        }
+        .hero-core-svg .orbital-group {
+            animation: orbit 10s linear infinite;
+            transform-origin: 260px 260px;
+        }
+        .hero-core-svg .orbital-group-reverse {
+            animation: orbit 15s linear infinite reverse;
+            transform-origin: 260px 260px;
+        }
+        .hero-core-svg .node-pulse {
+            animation: nodePulse 2s ease-in-out infinite;
+        }
+
+        @keyframes orbit {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        @keyframes nodePulse {
+            0%, 100% { opacity: 0.4; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
         }
 
         @media (max-width: 700px) {
@@ -480,6 +538,7 @@
             padding: 64px 0;
             border-bottom: 1px solid var(--line);
             position: relative;
+            z-index: 1;
         }
         section:last-of-type {
             border-bottom: none;
@@ -946,56 +1005,27 @@
 
         /* ── Animations ── */
         @keyframes corePulse {
-            0%,
-            100% {
-                opacity: 0.85;
-                transform: scale(1);
-            }
-            50% {
-                opacity: 1;
-                transform: scale(1.03);
-            }
+            0%, 100% { opacity: 0.85; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.03); }
         }
         @keyframes ringPulse {
-            0%,
-            100% {
-                opacity: 0.12;
-            }
-            50% {
-                opacity: 0.25;
-            }
+            0%, 100% { opacity: 0.12; }
+            50% { opacity: 0.25; }
         }
         @keyframes neutronTravel {
-            to {
-                stroke-dashoffset: -200;
-            }
+            to { stroke-dashoffset: -200; }
         }
         @keyframes statusPulse {
-            0%,
-            100% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.35;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.35; }
         }
         @keyframes heroRise {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         @keyframes driftSlow {
-            from {
-                transform: rotate(0deg);
-            }
-            to {
-                transform: rotate(360deg);
-            }
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
         }
 
         .section-watermark {
@@ -1014,7 +1044,6 @@
             animation: neutronTravel 3.5s linear infinite;
         }
 
-        /* Hero entry animations */
         .profile-frame,
         .hero-core-svg,
         .hero-eyebrow,
@@ -1026,62 +1055,52 @@
             opacity: 0;
             animation: heroRise .7s ease forwards;
         }
-        .profile-frame {
-            animation-delay: .05s;
-        }
-        .hero-core-svg {
-            animation-delay: .1s;
-        }
-        .hero-eyebrow {
-            animation-delay: .2s;
-        }
-        .hero-name {
-            animation-delay: .3s;
-        }
-        .hero-role {
-            animation-delay: .4s;
-        }
-        .hero-lede {
-            animation-delay: .5s;
-        }
-        .hero-cta {
-            animation-delay: .6s;
-        }
-        .research-pulse {
-            animation-delay: .7s;
-        }
+        .profile-frame { animation-delay: .05s; }
+        .hero-core-svg { animation-delay: .1s; }
+        .hero-eyebrow { animation-delay: .2s; }
+        .hero-name { animation-delay: .3s; }
+        .hero-role { animation-delay: .4s; }
+        .hero-lede { animation-delay: .5s; }
+        .hero-cta { animation-delay: .6s; }
+        .research-pulse { animation-delay: .7s; }
 
         @media (prefers-reduced-motion: reduce) {
-            .hero-core-svg,
-            .hero-core-svg .ring,
-            .hero-core-svg .neutron-path,
-            .status-float .pulse-dot,
-            .section-watermark {
+            .hero-core-svg, .hero-core-svg .ring, .hero-core-svg .neutron-path,
+            .status-float .pulse-dot, .section-watermark, #global-core-bg {
                 animation: none;
             }
-            .profile-frame,
-            .hero-core-svg,
-            .hero-eyebrow,
-            .hero-name,
-            .hero-role,
-            .hero-lede,
-            .hero-cta,
-            .research-pulse {
+            .profile-frame, .hero-core-svg, .hero-eyebrow, .hero-name,
+            .hero-role, .hero-lede, .hero-cta, .research-pulse {
                 opacity: 1;
                 animation: none;
             }
-            html {
-                scroll-behavior: auto;
-            }
-            .reveal {
-                opacity: 1;
-                transform: none;
-                transition: none;
-            }
+            html { scroll-behavior: auto; }
+            .reveal { opacity: 1; transform: none; transition: none; }
         }
     </style>
 </head>
 <body>
+
+    <!-- ─── PERSISTENT BACKGROUND CORE (subtle, whole page workflow) ─── -->
+    <div id="global-core-bg" aria-hidden="true">
+        <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+            <circle cx="260" cy="260" r="230" stroke="#6fe0ff" stroke-width="1" opacity="0.3" fill="none"/>
+            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1" opacity="0.4" fill="none"/>
+            <circle class="ring" cx="260" cy="260" r="90" stroke="#6fe0ff" stroke-width="1" opacity="0.5" fill="none"/>
+            <circle cx="260" cy="260" r="32" fill="#6fe0ff" opacity="0.1"/>
+            <g class="orbital-group">
+                <circle cx="0" cy="-140" r="3" fill="#6fe0ff"/>
+                <circle cx="0" cy="-200" r="4" fill="#e0a838"/>
+            </g>
+            <g class="orbital-group-reverse">
+                <circle cx="0" cy="-180" r="3.5" fill="#2dd4bf"/>
+            </g>
+            <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+            <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+            <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+            <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+        </svg>
+    </div>
 
     <!-- ===================== TOP NAVIGATION ===================== -->
     <header class="top-nav">
@@ -1117,7 +1136,7 @@
         <section id="overview">
             <div class="wrap hero-layout">
                 
-                <!-- Top: Centered Profile + Core in Top-Right Corner -->
+                <!-- Top: Centered Profile + Dynamic Core in Top-Right Corner -->
                 <div class="hero-top">
                     <!-- Center: Profile Photo -->
                     <div class="hero-profile-wrapper">
@@ -1130,7 +1149,7 @@
                         </div>
                     </div>
                     
-                    <!-- Top-Right Corner: Enlarged Dynamic Core with extended rays -->
+                    <!-- Top-Right Corner: Dynamic Core with Orbital Mechanics -->
                     <div class="hero-core-wrapper">
                         <svg class="hero-core-svg" viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                             <defs>
@@ -1152,6 +1171,18 @@
                             <circle class="ring" cx="260" cy="260" r="100" stroke="#6fe0ff" stroke-width="1" opacity="0.20"/>
                             <circle class="ring" cx="260" cy="260" r="50" stroke="#e0a838" stroke-width="1.5" opacity="0.25"/>
                             <circle cx="260" cy="260" r="32" fill="#0e1a2b" opacity="0.7" stroke="#6fe0ff" stroke-width="1" opacity="0.4"/>
+                            
+                            <!-- Orbiting Particles (Dynamic Workflow) -->
+                            <g class="orbital-group">
+                                <circle cx="0" cy="-130" r="4" fill="#6fe0ff" class="node-pulse"/>
+                                <circle cx="0" cy="-190" r="5" fill="#e0a838" opacity="0.8"/>
+                                <circle cx="0" cy="-80" r="3" fill="#2dd4bf" class="node-pulse"/>
+                            </g>
+                            <g class="orbital-group-reverse">
+                                <circle cx="0" cy="-160" r="4.5" fill="#6fe0ff" opacity="0.9"/>
+                                <circle cx="0" cy="-220" r="3" fill="#e0a838" class="node-pulse"/>
+                            </g>
+
                             <g fill="#6fe0ff">
                                 <circle cx="260" cy="260" r="5" opacity="0.7"/>
                                 <circle cx="286" cy="244" r="3.5" opacity="0.5"/>
@@ -1173,17 +1204,20 @@
                                 <circle cx="210" cy="244" r="2.5"/>
                                 <circle cx="210" cy="276" r="2.5"/>
                             </g>
-                            <!-- Extended rays (longer paths) -->
-                            <path class="neutron-path" d="M260 260 C 360 160, 460 180, 510 110" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 10" opacity="0.6"/>
-                            <path class="neutron-path" d="M260 260 C 160 180, 110 90, 60 40" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 10" opacity="0.5"/>
-                            <path class="neutron-path" d="M260 260 C 190 360, 220 440, 160 510" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 10" opacity="0.55"/>
-                            <path class="neutron-path" d="M260 260 C 380 320, 440 380, 510 430" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 10" opacity="0.45"/>
+                            
+                            <!-- Extended Ray Paths -->
+                            <path class="neutron-path" d="M260 260 C 360 160, 460 180, 510 110" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.6"/>
+                            <path class="neutron-path" d="M260 260 C 160 180, 110 90, 60 40" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.5"/>
+                            <path class="neutron-path" d="M260 260 C 190 360, 220 440, 160 510" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.55"/>
+                            <path class="neutron-path" d="M260 260 C 380 320, 440 380, 510 430" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.45"/>
                             <path class="neutron-path" d="M260 260 C 180 180, 120 130, 60 160" stroke="#e0a838" stroke-width="1.2" stroke-dasharray="3 8" opacity="0.4"/>
-                            <circle cx="510" cy="110" r="4.5" fill="#6fe0ff" opacity="0.85"/>
-                            <circle cx="60" cy="40" r="3.5" fill="#6fe0ff" opacity="0.7"/>
-                            <circle cx="160" cy="510" r="4" fill="#6fe0ff" opacity="0.75"/>
-                            <circle cx="510" cy="430" r="3.5" fill="#6fe0ff" opacity="0.6"/>
-                            <circle cx="60" cy="160" r="3" fill="#e0a838" opacity="0.6"/>
+                            
+                            <!-- Pulsing End Nodes -->
+                            <circle cx="510" cy="110" r="4.5" fill="#6fe0ff" class="node-pulse" opacity="0.85"/>
+                            <circle cx="60" cy="40" r="3.5" fill="#6fe0ff" class="node-pulse" opacity="0.7"/>
+                            <circle cx="160" cy="510" r="4" fill="#6fe0ff" class="node-pulse" opacity="0.75"/>
+                            <circle cx="510" cy="430" r="3.5" fill="#6fe0ff" class="node-pulse" opacity="0.6"/>
+                            <circle cx="60" cy="160" r="3" fill="#e0a838" class="node-pulse" opacity="0.6"/>
                         </svg>
                     </div>
                 </div>
@@ -1564,28 +1598,19 @@
             });
         });
 
-        // ── Intriguing Background Drift ──
-        // Shifts the background dot grid and gradients slightly based on scroll position.
-        // Creates a slow parallax-like drift effect.
+        // ── Background Drift ──
         function updateBackgroundDrift() {
             const scrollY = window.scrollY;
             const shiftX = scrollY * 0.03;
             const shiftY = scrollY * 0.05;
-            
-            // Background has 6 layers: 2 dot patterns, then 4 gradients.
-            // We shift the first two layers (the dot patterns) relative to the scroll.
-            // Layer 1: 0 0 -> shiftX shiftY
-            // Layer 2: 21px 18.2px -> (21 + shiftX) (18.2 + shiftY)
             const dot1X = shiftX;
             const dot1Y = shiftY;
             const dot2X = 21 + shiftX;
             const dot2Y = 18.2 + shiftY;
-            
             document.body.style.backgroundPosition = 
                 `${dot1X}px ${dot1Y}px, ${dot2X}px ${dot2Y}px, 0 0, 0 0, 0 0, 0 0`;
         }
 
-        // Use a throttled scroll listener for performance
         let ticking = false;
         window.addEventListener('scroll', () => {
             if (!ticking) {
@@ -1596,9 +1621,34 @@
                 ticking = true;
             }
         });
-
-        // Initialize drift on load
         window.addEventListener('load', updateBackgroundDrift);
+
+        // ── Mouse Tracking for Hero Core (Parallax effect) ──
+        const overview = document.getElementById('overview');
+        const heroCore = document.querySelector('.hero-core-wrapper');
+
+        if (overview && heroCore) {
+            overview.addEventListener('mousemove', (e) => {
+                const rect = overview.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const deltaX = (x - centerX) / centerX;
+                const deltaY = (y - centerY) / centerY;
+                
+                const moveX = deltaX * 25;
+                const moveY = deltaY * 25;
+                
+                heroCore.style.transform = `translate(${moveX}px, ${moveY}px)`;
+            });
+
+            // Reset on mouse leave
+            overview.addEventListener('mouseleave', () => {
+                heroCore.style.transform = `translate(0px, 0px)`;
+            });
+        }
     </script>
 
 </body>
