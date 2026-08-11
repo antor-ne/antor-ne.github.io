@@ -34,6 +34,7 @@
         }
 
         body {
+            /* Background dot grid + gradients – stays fixed */
             background:
                 radial-gradient(circle, rgba(111, 224, 255, 0.05) 1.2px, transparent 1.4px),
                 radial-gradient(circle, rgba(111, 224, 255, 0.05) 1.2px, transparent 1.4px),
@@ -49,7 +50,6 @@
             font-size: 16px;
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
-            transition: background-position 0.08s ease-out;
             overflow-x: hidden;
         }
 
@@ -97,20 +97,20 @@
             color: transparent;
         }
 
-        /* ── Dynamic Background Core (subtle, fixed, flows through whole page) ── */
+        /* ── FIXED DYNAMIC BACKGROUND CORE (visible on every scroll position) ── */
         #global-core-bg {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
             z-index: 0;
-            width: 90vw;
-            max-width: 900px;
-            height: 90vw;
-            max-height: 900px;
-            opacity: 0.04;
+            width: 95vw;
+            max-width: 1000px;
+            height: 95vw;
+            max-height: 1000px;
+            opacity: 0.08;
             pointer-events: none;
-            animation: rotateGlobal 120s linear infinite;
+            animation: rotateGlobal 140s linear infinite;
         }
         #global-core-bg .ring {
             animation: ringPulse 6s ease-in-out infinite;
@@ -125,6 +125,9 @@
         #global-core-bg .orbital-group-reverse {
             animation: orbit 30s linear infinite reverse;
             transform-origin: 50% 50%;
+        }
+        #global-core-bg .node-pulse {
+            animation: nodePulse 2.5s ease-in-out infinite;
         }
 
         @keyframes rotateGlobal {
@@ -1081,7 +1084,7 @@
 </head>
 <body>
 
-    <!-- ─── PERSISTENT BACKGROUND CORE (subtle, whole page workflow) ─── -->
+    <!-- ─── FIXED DYNAMIC BACKGROUND CORE (visible on every scroll position) ─── -->
     <div id="global-core-bg" aria-hidden="true">
         <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
             <circle cx="260" cy="260" r="230" stroke="#6fe0ff" stroke-width="1" opacity="0.3" fill="none"/>
@@ -1089,16 +1092,20 @@
             <circle class="ring" cx="260" cy="260" r="90" stroke="#6fe0ff" stroke-width="1" opacity="0.5" fill="none"/>
             <circle cx="260" cy="260" r="32" fill="#6fe0ff" opacity="0.1"/>
             <g class="orbital-group">
-                <circle cx="0" cy="-140" r="3" fill="#6fe0ff"/>
-                <circle cx="0" cy="-200" r="4" fill="#e0a838"/>
+                <circle cx="0" cy="-140" r="3" fill="#6fe0ff" class="node-pulse"/>
+                <circle cx="0" cy="-200" r="4" fill="#e0a838" class="node-pulse"/>
             </g>
             <g class="orbital-group-reverse">
-                <circle cx="0" cy="-180" r="3.5" fill="#2dd4bf"/>
+                <circle cx="0" cy="-180" r="3.5" fill="#2dd4bf" class="node-pulse"/>
             </g>
             <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
             <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
             <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
             <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+            <circle class="node-pulse" cx="470" cy="140" r="4" fill="#6fe0ff" opacity="0.7"/>
+            <circle class="node-pulse" cx="90" cy="70" r="3" fill="#6fe0ff" opacity="0.6"/>
+            <circle class="node-pulse" cx="190" cy="480" r="3.5" fill="#6fe0ff" opacity="0.65"/>
+            <circle class="node-pulse" cx="470" cy="400" r="3" fill="#6fe0ff" opacity="0.5"/>
         </svg>
     </div>
 
@@ -1175,11 +1182,11 @@
                             <!-- Orbiting Particles (Dynamic Workflow) -->
                             <g class="orbital-group">
                                 <circle cx="0" cy="-130" r="4" fill="#6fe0ff" class="node-pulse"/>
-                                <circle cx="0" cy="-190" r="5" fill="#e0a838" opacity="0.8"/>
+                                <circle cx="0" cy="-190" r="5" fill="#e0a838" class="node-pulse"/>
                                 <circle cx="0" cy="-80" r="3" fill="#2dd4bf" class="node-pulse"/>
                             </g>
                             <g class="orbital-group-reverse">
-                                <circle cx="0" cy="-160" r="4.5" fill="#6fe0ff" opacity="0.9"/>
+                                <circle cx="0" cy="-160" r="4.5" fill="#6fe0ff" class="node-pulse"/>
                                 <circle cx="0" cy="-220" r="3" fill="#e0a838" class="node-pulse"/>
                             </g>
 
