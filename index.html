@@ -97,7 +97,7 @@
             color: transparent;
         }
 
-        /* ── FIXED DYNAMIC BACKGROUND CORE (visible on every scroll position) ── */
+        /* ── FIXED DYNAMIC BACKGROUND CORE (uniform particle motion) ── */
         #global-core-bg {
             position: fixed;
             top: 50%;
@@ -108,26 +108,26 @@
             max-width: 1000px;
             height: 95vw;
             max-height: 1000px;
-            opacity: 0.08;
+            opacity: 0.07;
             pointer-events: none;
-            animation: rotateGlobal 140s linear infinite;
+            animation: rotateGlobal 180s linear infinite;
         }
         #global-core-bg .ring {
-            animation: ringPulse 6s ease-in-out infinite;
+            animation: ringPulse 8s ease-in-out infinite;
         }
         #global-core-bg .neutron-path {
-            animation: neutronTravel 4s linear infinite;
+            animation: neutronTravel 6s linear infinite;
         }
         #global-core-bg .orbital-group {
-            animation: orbit 20s linear infinite;
+            animation: orbit 24s linear infinite;
             transform-origin: 50% 50%;
         }
         #global-core-bg .orbital-group-reverse {
-            animation: orbit 30s linear infinite reverse;
+            animation: orbit 32s linear infinite reverse;
             transform-origin: 50% 50%;
         }
         #global-core-bg .node-pulse {
-            animation: nodePulse 2.5s ease-in-out infinite;
+            animation: nodePulse 3s ease-in-out infinite;
         }
 
         @keyframes rotateGlobal {
@@ -390,8 +390,8 @@
             to { transform: rotate(360deg); }
         }
         @keyframes nodePulse {
-            0%, 100% { opacity: 0.4; transform: scale(0.8); }
-            50% { opacity: 1; transform: scale(1.2); }
+            0%, 100% { opacity: 0.5; transform: scale(0.9); }
+            50% { opacity: 1; transform: scale(1.1); }
         }
 
         @media (max-width: 700px) {
@@ -1084,13 +1084,15 @@
 </head>
 <body>
 
-    <!-- ─── FIXED DYNAMIC BACKGROUND CORE (visible on every scroll position) ─── -->
+    <!-- ─── FIXED DYNAMIC BACKGROUND CORE (uniform, consistent motion) ─── -->
     <div id="global-core-bg" aria-hidden="true">
         <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-            <circle cx="260" cy="260" r="230" stroke="#6fe0ff" stroke-width="1" opacity="0.3" fill="none"/>
-            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1" opacity="0.4" fill="none"/>
-            <circle class="ring" cx="260" cy="260" r="90" stroke="#6fe0ff" stroke-width="1" opacity="0.5" fill="none"/>
-            <circle cx="260" cy="260" r="32" fill="#6fe0ff" opacity="0.1"/>
+            <circle cx="260" cy="260" r="230" stroke="#6fe0ff" stroke-width="1" opacity="0.25" fill="none"/>
+            <circle class="ring" cx="260" cy="260" r="150" stroke="#6fe0ff" stroke-width="1" opacity="0.35" fill="none"/>
+            <circle class="ring" cx="260" cy="260" r="90" stroke="#6fe0ff" stroke-width="1" opacity="0.45" fill="none"/>
+            <circle cx="260" cy="260" r="32" fill="#6fe0ff" opacity="0.08"/>
+            
+            <!-- Uniform orbital groups -->
             <g class="orbital-group">
                 <circle cx="0" cy="-140" r="3" fill="#6fe0ff" class="node-pulse"/>
                 <circle cx="0" cy="-200" r="4" fill="#e0a838" class="node-pulse"/>
@@ -1098,10 +1100,14 @@
             <g class="orbital-group-reverse">
                 <circle cx="0" cy="-180" r="3.5" fill="#2dd4bf" class="node-pulse"/>
             </g>
-            <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
-            <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
-            <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
-            <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="3 6"/>
+            
+            <!-- Uniform neutron paths (consistent dasharray and speed) -->
+            <path class="neutron-path" d="M260 260 C 340 180, 420 210, 470 140" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
+            <path class="neutron-path" d="M260 260 C 180 200, 140 120, 90 70" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
+            <path class="neutron-path" d="M260 260 C 210 340, 240 410, 190 480" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
+            <path class="neutron-path" d="M260 260 C 350 300, 400 360, 470 400" stroke="#6fe0ff" stroke-width="1" stroke-dasharray="4 8"/>
+            
+            <!-- Uniform node pulses -->
             <circle class="node-pulse" cx="470" cy="140" r="4" fill="#6fe0ff" opacity="0.7"/>
             <circle class="node-pulse" cx="90" cy="70" r="3" fill="#6fe0ff" opacity="0.6"/>
             <circle class="node-pulse" cx="190" cy="480" r="3.5" fill="#6fe0ff" opacity="0.65"/>
@@ -1179,7 +1185,7 @@
                             <circle class="ring" cx="260" cy="260" r="50" stroke="#e0a838" stroke-width="1.5" opacity="0.25"/>
                             <circle cx="260" cy="260" r="32" fill="#0e1a2b" opacity="0.7" stroke="#6fe0ff" stroke-width="1" opacity="0.4"/>
                             
-                            <!-- Orbiting Particles (Dynamic Workflow) -->
+                            <!-- Uniform Orbiting Particles -->
                             <g class="orbital-group">
                                 <circle cx="0" cy="-130" r="4" fill="#6fe0ff" class="node-pulse"/>
                                 <circle cx="0" cy="-190" r="5" fill="#e0a838" class="node-pulse"/>
@@ -1212,14 +1218,14 @@
                                 <circle cx="210" cy="276" r="2.5"/>
                             </g>
                             
-                            <!-- Extended Ray Paths -->
+                            <!-- Uniform Extended Ray Paths -->
                             <path class="neutron-path" d="M260 260 C 360 160, 460 180, 510 110" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.6"/>
                             <path class="neutron-path" d="M260 260 C 160 180, 110 90, 60 40" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.5"/>
                             <path class="neutron-path" d="M260 260 C 190 360, 220 440, 160 510" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.55"/>
                             <path class="neutron-path" d="M260 260 C 380 320, 440 380, 510 430" stroke="#6fe0ff" stroke-width="1.5" stroke-dasharray="4 12" opacity="0.45"/>
                             <path class="neutron-path" d="M260 260 C 180 180, 120 130, 60 160" stroke="#e0a838" stroke-width="1.2" stroke-dasharray="3 8" opacity="0.4"/>
                             
-                            <!-- Pulsing End Nodes -->
+                            <!-- Uniform Pulsing End Nodes -->
                             <circle cx="510" cy="110" r="4.5" fill="#6fe0ff" class="node-pulse" opacity="0.85"/>
                             <circle cx="60" cy="40" r="3.5" fill="#6fe0ff" class="node-pulse" opacity="0.7"/>
                             <circle cx="160" cy="510" r="4" fill="#6fe0ff" class="node-pulse" opacity="0.75"/>
